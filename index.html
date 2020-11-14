@@ -64,6 +64,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-windows权限" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/14/windows%E6%9D%83%E9%99%90/" class="article-date">
+  <time datetime="2020-11-14T01:12:18.000Z" itemprop="datePublished">2020-11-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/14/windows%E6%9D%83%E9%99%90/">windows权限</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Windows访问控制概述"><a href="#Windows访问控制概述" class="headerlink" title="Windows访问控制概述:"></a>Windows访问控制概述:</h2><p>Windows访问控制中最主要的部分：访问令牌（Access Token）和安全描述符（Security Descriptor），<br>window通过查看访问者AT与被访问对象SD中的内容来确定访问者是否能访问对象。</p>
+<h2 id="Windows访问控制概念介绍："><a href="#Windows访问控制概念介绍：" class="headerlink" title="Windows访问控制概念介绍："></a>Windows访问控制概念介绍：</h2><ul>
+<li>SID：Secure Identifier(安全标识符)，每个用户和账户组都有一个唯一的SID（通常情况下唯一）。它是标识用户、用户组和计算机账户唯一的号码，由计算机名、当前时间、当前用户态线程的CPU耗费时间三个参数来确定。</li>
+<li>Access Token:与特定的windows账户关联，账户环境下启动的所有进程都会获得该令牌的副本，进程中的线程默认获得这个令牌。由关联账户的SID、当前登录账户所属组的SID列表、受限制的SID列表、当前登录账户与所属组的Privilege列表组成。</li>
+<li>Security Descriptor:安全描述符，与被访问对象关联。由对象所有者的SID、属组SID、DACL、SACL组成。DACL（随机访问控制列表）是SD最重要的一部分，描述允许或拒绝特定用户或组的某些访问权限，它包含零个或多个访问控制实体（ACE，Access Control Entry）。</li>
+<li>ACE：访问控制实体，用于指定特定用户/组的访问权限，由SID、SIZE、Type、Access Mask、Inheritance/Audit Flags组成。</li>
+</ul>
+<h2 id="Windows访问控制流程图："><a href="#Windows访问控制流程图：" class="headerlink" title="Windows访问控制流程图："></a>Windows访问控制流程图：</h2><p>当一个线程尝试去访问一个对象时，系统会检查线程持有的令牌以及被访问对象的安全描述符中的DACL。<br>如果安全描述符中不存在DACL，则系统会允许线程进行访问。<br>如果存在DACL，系统会顺序遍历DACL中的每个ACE，检查ACE中的SID在线程的令牌中是否存在。<br>以访问者中的User SID或Group SID作为关键字查询被访问对象中的DACL。<br>顺序：先查询类型为DENY的ACE，若命中且权限符合则访问拒绝；<br>未命中再在ALLOWED类型的ACE中查询，若命中且类型符合则可以访问；以上两步后还没命中那么访问拒绝。</p>
+<p><img src="/2020/11/14/windows%E6%9D%83%E9%99%90/acl.jpeg" alt="www"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/11/14/windows%E6%9D%83%E9%99%90/" data-id="ckhh0ob3g0003cgnldrb372bs" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-开发流" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/11/12/%E5%BC%80%E5%8F%91%E6%B5%81/" class="article-date">
@@ -91,7 +136,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/12/%E5%BC%80%E5%8F%91%E6%B5%81/" data-id="ckheyod9700056wnl5iyn2et1" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/12/%E5%BC%80%E5%8F%91%E6%B5%81/" data-id="ckhh0ob3i0006cgnl7vnu4h2s" class="article-share-link">Share</a>
       
       
     </footer>
@@ -155,7 +200,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/11/%E5%A6%82%E4%BD%95%E6%B2%9F%E9%80%9A/" data-id="ckheyod9600036wnl7ndie4wv" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/11/%E5%A6%82%E4%BD%95%E6%B2%9F%E9%80%9A/" data-id="ckhh0ob3h0004cgnl8xcp2n5q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -200,7 +245,7 @@ g. 工具链 持续集成 持续交付 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/10/%E5%B7%A5%E7%A8%8B%E5%8C%96/" data-id="ckheyod9600046wnl07tm05po" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/10/%E5%B7%A5%E7%A8%8B%E5%8C%96/" data-id="ckhh0ob3i0005cgnl0b5ab1i7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -244,7 +289,7 @@ g. 工具链 持续集成 持续交付 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/08/electron/" data-id="ckheyod9500026wnlhz6idx2i" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/08/electron/" data-id="ckhh0ob380000cgnl8l0o5fkf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -289,7 +334,7 @@ g. 工具链 持续集成 持续交付 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/08/npm%E4%BD%BF%E7%94%A8/" data-id="ckheyod9400016wnl71jkbpwt" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/08/npm%E4%BD%BF%E7%94%A8/" data-id="ckhh0ob3d0001cgnl4mmtclsk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -365,7 +410,7 @@ g. 工具链 持续集成 持续交付 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/07/DDD/" data-id="ckheyod8z00006wnlhivpc7to" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/07/DDD/" data-id="ckhh0ob3e0002cgnl9yf21ge0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -416,7 +461,7 @@ g. 工具链 持续集成 持续交付 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/01/%E9%9A%8F%E7%AC%94/" data-id="ckheyod9800066wnleeds3bxc" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/01/%E9%9A%8F%E7%AC%94/" data-id="ckhh0ob3j0007cgnl0yg7c335" class="article-share-link">Share</a>
       
       
     </footer>
@@ -457,6 +502,10 @@ g. 工具链 持续集成 持续交付 </code></pre>
       <ul>
         
           <li>
+            <a href="/2020/11/14/windows%E6%9D%83%E9%99%90/">windows权限</a>
+          </li>
+        
+          <li>
             <a href="/2020/11/12/%E5%BC%80%E5%8F%91%E6%B5%81/">开发流</a>
           </li>
         
@@ -470,10 +519,6 @@ g. 工具链 持续集成 持续交付 </code></pre>
         
           <li>
             <a href="/2020/11/08/electron/">electron</a>
-          </li>
-        
-          <li>
-            <a href="/2020/11/08/npm%E4%BD%BF%E7%94%A8/">npm使用</a>
           </li>
         
       </ul>
