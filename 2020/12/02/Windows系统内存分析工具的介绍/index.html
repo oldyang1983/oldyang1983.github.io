@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Windows系统内存分析工具的介绍 | 老杨的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述微软官方提供多种工具来分析Windows系统的内存使用情况，除了系统自带的任务管理器（Task Manager），资源监视器（Resource Manager），性能监视器（Performance Monitor），还有SysInternals工具，SysInternals工具如RAMMap和PoolMon，可以用来分析内存问题。本文简单介绍这些工具的使用方法，如果需要了解深入了解，请参考微软">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows系统内存分析工具的介绍">
+<meta property="og:url" content="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="老杨的博客">
+<meta property="og:description" content="概述微软官方提供多种工具来分析Windows系统的内存使用情况，除了系统自带的任务管理器（Task Manager），资源监视器（Resource Manager），性能监视器（Performance Monitor），还有SysInternals工具，SysInternals工具如RAMMap和PoolMon，可以用来分析内存问题。本文简单介绍这些工具的使用方法，如果需要了解深入了解，请参考微软">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/1.png">
+<meta property="og:image" content="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/2.png">
+<meta property="og:image" content="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/3.png">
+<meta property="og:image" content="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/4.png">
+<meta property="og:image" content="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/5.png">
+<meta property="og:image" content="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/6.png">
+<meta property="og:image" content="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/7.png">
+<meta property="og:image" content="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/8.png">
+<meta property="article:published_time" content="2020-12-02T15:16:10.000Z">
+<meta property="article:modified_time" content="2020-12-02T15:23:05.059Z">
+<meta property="article:author" content="oldyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="老杨的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">老杨的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Windows系统内存分析工具的介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2020-12-02T15:16:10.000Z" itemprop="datePublished">2020-12-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Windows系统内存分析工具的介绍
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>微软官方提供多种工具来分析Windows系统的内存使用情况，除了系统自带的任务管理器（Task Manager），资源监视器（Resource Manager），性能监视器（Performance Monitor），还有SysInternals工具，SysInternals工具如RAMMap和PoolMon，可以用来分析内存问题。本文简单介绍这些工具的使用方法，如果需要了解深入了解，请参考微软相关链接。</p>
+<p>任务管理器<br>Windows系统可以使用任务管理器进行内存监控，监控可以显示出详细的内存占用的进程。尤其是在性能中检查虚拟内存的使用情况，可以通过已提交虚拟内存（Commited Bytes）/虚拟内存上限（Commit Limit）查看使用情况。如果已提交虚拟内存非常接近上限，那么系统会出现性能问题。</p>
+<p>Windows 2008 R2</p>
+<ol>
+<li><p>打开任务管理器，单击 性能，通过任务管理器查看内存使用情况。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/1.png" alt="www"></p>
+</li>
+<li><p>还可以添加各类内存指标进行检查，打开任务管理器，依次选择 查看 &gt; 选择列，添加各类内存指标，请重点添加 内存 - 工作集（检查进程物理内存的占用）和 内存 - 提交大小（非保留的虚拟内存空间）。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/2.png" alt="www"></p>
+</li>
+<li><p>打开任务管理器，单击 性能，通过任务管理器查看内存使用情况。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/3.png" alt="www"></p>
+</li>
+</ol>
+<p>资源监视器<br>通过任务管理器，可以打开资源监视器（Resource Manager），进一步检查内存的使用情况，尤其是每个进程的使用情况。对于各个进程而言，请重点关注 提交（KB）内存的大小，监控是否有进程消耗过多资源。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/4.png" alt="www"></p>
+<p>物理内存的使用包含以下几个部分。</p>
+<p>给硬件保留的内存。<br>正在使用内存：由进程、驱动程序、操作系统使用的内存。<br>已修改内存：内容必须写入磁盘才能用于其它用途的内存。<br>备用内存：包含未使用的缓存数据和代码的内存。<br>可用内存：不包含任何有价值数据，以及当进程、驱动程序、操作系统需要更多的内存时优先使用的内存。<br>缓存：当文件被打开时，系统会把文件保存在缓存中，方便下次迅速读写。Windows 2008 R2及以后版本，对这个缓存的使用也做了限制，有一部分物理内存不会被缓存使用，保证系统即使在缓存过大的时候，也有可用物理内存，满足程序使用需求。</p>
+<p>性能监视器<br>性能监视器（Performance Monitor）是用于Windows监控和收集系统资源消耗的重要工具。</p>
+<p>监控性能消耗可以通过添加指定的计数器，实时检查系统资源消耗的情况，如下图所示。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/5.png" alt="www"></p>
+<p>此外，还可以依次选择 数据收集搜集 &gt; 用户定义，手工添加各类计数器，例如Logical Disk、Memory、System、Processor、 Process来收集系统各类资源的实时运行情况，同时通过采样间隔来定义收集频率。例如，如果机器有内存泄露问题很久才能复现，可以配置采样间隔为5秒，如果机器很容易出现CPU异常，那么可以配置采样间隔为1秒。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/6.png" alt="www"></p>
+<p>RAMMap和Process Explorer<br>RAMMap<br>有时在任务管理器的监控窗口中查看不到占用内存异常的进程，但物理内存显示已经负载的状态。这种情况一般是系统底层有占用内存的情况，可以通过RAMMap工具查看系统内存的占用情况，该工具是微软官方的软件，相关信息及下载地址请访问RAMMap。打开RAMMap，可以查看任务管理器中不显示的系统占用内存的情况。</p>
+<p>Process Explorer<br>Process Explorer也可以查看进程的详细资源占用情况，例如打开后也可以查看到进程的各类内存资源使用情况。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/7.png" alt="www"></p>
+<p>Pool Monitor<br>对于WIndows内核而言，其两项核心的内存资源为non paged pool（非页面缓冲池）以及paged pool（页面缓冲池）。操作系统出现内存性能问题，很可能是上述2个资源消耗殆尽。虽然通过上述提到的工具可以查看到资源消耗的情况，但是如果需要定位是系统哪个Tag消耗的资源，需要使用PoolMon来定位。使用介绍请参考Pool Monitor。</p>
+<p>检查perfmon的日志来定位究竟是哪个Pool Tag导致的资源消耗殆尽，例如，检查到IoDn Tag导致资源消耗完，通过如下命令定位到是SafeDogFileGuard.sys,，而后通过修正该应用解决。</p>
+<p>findstr /m /1 IoDn *.sys<br>系统显示类似如下。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/8.png" alt="www"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/" data-id="cki7kdbzg0001d4nlhc9t8fuc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">windows性能分析实例</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/">Windows系统内存分析工具的介绍</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/">windows性能分析实例</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">linux性能分析</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">windows性能分析</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/28/%E5%B8%A6%E4%BD%A0%E7%A0%B4%E8%A7%A3Android%E9%AB%98%E7%BA%A7%E9%9D%A2%E8%AF%95/">带你破解Android高级面试</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 oldyang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

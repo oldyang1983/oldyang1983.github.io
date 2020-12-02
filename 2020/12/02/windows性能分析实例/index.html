@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>windows性能分析实例 | 老杨的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="利用WPA进行调用栈追踪（call stack trace）分析下面来介绍调用栈追踪的步骤1）首先打开我们的测试样例程序StackTrace.exe，该程序源码在我的Github上《WPT-sample》 2）使用WPR记录系统状态生成日志文件，关于WPR和WPA的使用在博文《如何使用WPR和WPA记录系统状态》中有详细的讲述，这里不再赘述。注：勾选上CPU usage选项 3）利用WPA打开生成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows性能分析实例">
+<meta property="og:url" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/index.html">
+<meta property="og:site_name" content="老杨的博客">
+<meta property="og:description" content="利用WPA进行调用栈追踪（call stack trace）分析下面来介绍调用栈追踪的步骤1）首先打开我们的测试样例程序StackTrace.exe，该程序源码在我的Github上《WPT-sample》 2）使用WPR记录系统状态生成日志文件，关于WPR和WPA的使用在博文《如何使用WPR和WPA记录系统状态》中有详细的讲述，这里不再赘述。注：勾选上CPU usage选项 3）利用WPA打开生成">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/1.jpg">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/2.jpg">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/3.gif">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/4.gif">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/5.jpg">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/6.jpg">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/7.jpg">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/8.jpg">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/9.jpg">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/10.jpg">
+<meta property="article:published_time" content="2020-12-02T15:07:14.000Z">
+<meta property="article:modified_time" content="2020-12-02T15:12:36.724Z">
+<meta property="article:author" content="oldyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/1.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="老杨的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">老杨的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-windows性能分析实例" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/" class="article-date">
+  <time datetime="2020-12-02T15:07:14.000Z" itemprop="datePublished">2020-12-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      windows性能分析实例
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="利用WPA进行调用栈追踪（call-stack-trace）分析"><a href="#利用WPA进行调用栈追踪（call-stack-trace）分析" class="headerlink" title="利用WPA进行调用栈追踪（call stack trace）分析"></a>利用WPA进行调用栈追踪（call stack trace）分析</h3><p>下面来介绍调用栈追踪的步骤<br>1）首先打开我们的测试样例程序StackTrace.exe，该程序源码在我的Github上《WPT-sample》<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/1.jpg" alt="www"></p>
+<p>2）使用WPR记录系统状态生成日志文件，关于WPR和WPA的使用在博文《如何使用WPR和WPA记录系统状态》中有详细的讲述，这里不再赘述。注：勾选上CPU usage选项<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/2.jpg" alt="www"></p>
+<p>3）利用WPA打开生成的.etl日志文件，双击左侧栏的Computation项展开CPU系统活动记录<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/3.gif" alt="www"></p>
+<p>4）找到我们的StackTrace进程，右键Filter to Selection过滤掉其它进程的信息<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/4.gif" alt="www"></p>
+<p>5)展开[ROOT]项，就可以看到调用信息，但是现在我们缺少.pdb符号文件，所以只能看到调用模块，如下图<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/5.jpg" alt="www"></p>
+<p>6）配置我们自己的.pdb符号文件路径，那这个符号文件在哪里呢，就在我们解决方案的目录中！！其实在我们生成解决方案的时候，MSVC中的链接器就会自动为我们生成一个.pdb文件，这个文件当中描述了函数地址和函数名称的一些对应关系，现在我们要做的就是配置这个.pdb文件路径<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/6.jpg" alt="www"><br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/7.jpg" alt="www"><br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/8.jpg" alt="www"></p>
+<pre><code> 注：srv*C:\Symbols*http://msdl.microsoft.com/download/symbols是微软自身的符号文件，其中包含了系统调用的名称地址，初次加载可能需要下载这些符号文件</code></pre>
+<p>7）加载.pdb符号文件，初次加载的时候可能要等待一会儿<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/9.jpg" alt="www"></p>
+<p>8）加载完成后，展开[ROOT]项，便可以看到所有的函数调用过程和调用次数，下图是我的调用栈追踪图片。可以看出writeFunc这个函数被调用了1037次，带来了整个CPU90+%（0.6/0.62）的性能开销<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/10.jpg" alt="www"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/" data-id="cki7kdbzo0007d4nlh55d91dn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Windows系统内存分析工具的介绍
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">linux性能分析</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/">Windows系统内存分析工具的介绍</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/">windows性能分析实例</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">linux性能分析</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">windows性能分析</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/28/%E5%B8%A6%E4%BD%A0%E7%A0%B4%E8%A7%A3Android%E9%AB%98%E7%BA%A7%E9%9D%A2%E8%AF%95/">带你破解Android高级面试</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 oldyang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

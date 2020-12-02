@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>windows性能分析 | 老杨的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="QQ浏览器性能提升之路——windows性能分析工具篇https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1037284 一、 Windows性能工具包简介(1) Windows性能工具包(Windows Performance Toolkit，简称WPT)有两个主要组件：Windows Performance Recorder(WPR)和Windows Per">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows性能分析">
+<meta property="og:url" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="老杨的博客">
+<meta property="og:description" content="QQ浏览器性能提升之路——windows性能分析工具篇https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1037284 一、 Windows性能工具包简介(1) Windows性能工具包(Windows Performance Toolkit，简称WPT)有两个主要组件：Windows Performance Recorder(WPR)和Windows Per">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/install.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/tool.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/datatable.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/wpa.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/time.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/console.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/tools.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis2.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/cpu.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/cpu2.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/step3.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/step4.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/step5.png">
+<meta property="og:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/process.png">
+<meta property="article:published_time" content="2020-12-02T14:36:01.000Z">
+<meta property="article:modified_time" content="2020-12-02T15:15:13.879Z">
+<meta property="article:author" content="oldyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/install.png">
+  
+    <link rel="alternate" href="/atom.xml" title="老杨的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">老杨的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-windows性能分析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" class="article-date">
+  <time datetime="2020-12-02T14:36:01.000Z" itemprop="datePublished">2020-12-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      windows性能分析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>QQ浏览器性能提升之路——windows性能分析工具篇<br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1037284">https://cloud.tencent.com/developer/article/1037284</a></p>
+<h3 id="一、-Windows性能工具包简介"><a href="#一、-Windows性能工具包简介" class="headerlink" title="一、 Windows性能工具包简介"></a>一、 Windows性能工具包简介</h3><p>(1) Windows性能工具包(Windows Performance Toolkit，简称WPT)有两个主要组件：Windows Performance Recorder(WPR)和Windows Performance Analyzer(WPA);</p>
+<p>(2) WPR用来追踪CPU使用率、磁盘I/O、文件、网络、GPU活动、电源使用情况等，借助ETW技术框架实现，将以上信息保存在ETL文件中;</p>
+<p>(3) WPA辅助WPR使用，用来可视化分析ETL文件，从而确定系统性能瓶颈</p>
+<h3 id="二、Windows性能工具包安装"><a href="#二、Windows性能工具包安装" class="headerlink" title="二、Windows性能工具包安装"></a>二、Windows性能工具包安装</h3><p>下载安装Windows ADK得到 Windows 性能工具包 (WPT)，<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/archive/blogs/pigscanfly/xperf-a-new-tool-in-the-windows-sdk">https://docs.microsoft.com/en-us/archive/blogs/pigscanfly/xperf-a-new-tool-in-the-windows-sdk</a></p>
+<p>2.2 安装</p>
+<p>(1) 默认安装路径：C:\Program Files (x86)\Windows Kits\8.1\WindowsPerformance Toolkit</p>
+<p>(2) 安装文件：<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/install.png" alt="www"></p>
+<p>(3) 文件简介</p>
+<p>wpa.exe —解析ETL文件，并图形化、表格化展示。</p>
+<p>wpaexporter.exe —导出ETL文件的解析结果成文本格式。</p>
+<p>wpr.exe —记录ETW产生的数据，命令行模式。</p>
+<p>WPRUI.exe —记录ETW产生的数据，图形化界面，更友好。</p>
+<p>xperf.exe —早期版本WPT的核心组件，所以现在习惯将WPT称为XPerf。XPerf的功能类似于wpr+wpaexporter，可以记录ETW产生的数据，也可以导出结果到文本。</p>
+<p>xperfview.exe —早期版本WPT中的分析工具，功能和现在的WPA一样，WPT从版本8以后已经没有这个exe了。在WinXP上只能使用旧版的XPerf，而且建议用对应的xperfview打开分析。</p>
+<h3 id="三、Windows性能工具包工作原理"><a href="#三、Windows性能工具包工作原理" class="headerlink" title="三、Windows性能工具包工作原理"></a>三、Windows性能工具包工作原理</h3><p>3.1 WPR工作原理——ETW技术框架</p>
+<p>CONTROLLERS：启动和停止Events发送，以及log路径和大小设置，以及Provider的选择允许；WPR就是一个Controllers，它会使用StartTrace等API来开启信息追踪。</p>
+<p>PROVIDERS：不同类型的Event产生者。例如线程、网络、I/O、CPU、内存等各种Provider，它会使用WriteEvent来记录信息。</p>
+<p>CONSUMERS：已产生Event的使用者；WPA就是使用者，用来做可视化分析，它会解析logfile以获取结果。</p>
+<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/tool.png" alt="www"></p>
+<p>3.2 WPA工作原理——DataTable</p>
+<p>Key area：用这一组维度数据作为统计关键字，通常需要正确搭配，例如Process可以搭配Thread。</p>
+<p>Data area：数据统计区，这里可以是消耗时间costtime、次数等。</p>
+<p>Graphing element area：绘制区，这里可以是时间间隔duringtime、权重占比Weight等</p>
+<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/datatable.png" alt="www"></p>
+<h3 id="四、Windows性能工具实例分析"><a href="#四、Windows性能工具实例分析" class="headerlink" title="四、Windows性能工具实例分析"></a>四、Windows性能工具实例分析</h3><p>4.1 WPR追踪获取信息</p>
+<p>4.1.1 WPR命令简介</p>
+<p>WPR的使用是通过命令行的形式来完成的。常见的命令如下：</p>
+<pre><code> -start [SessionName]：需要启动的Session Name，只记录kernel logging的话Name可以为空
+ -on Flags|Groups：指定需要开启的provider flags or groups，通过加号(+)分隔 
+ -f filename：指定写入的文件名字，Kernel trace默认是Kernel.etl, user trace默认是User.etl 
+ -maxfile Size：限定日志文件的大小，单位MB 
+ -filemode Mode：指定文件写入模式，默认是&quot;Sequential&quot;，还有&quot;Circular&quot;, &quot;Append&quot;,&quot;NewFile&quot;
+ -stackwalk flags|@file：开启call stack的记录</code></pre>
+<p>4.1.2 生成ETL文件</p>
+<p>使用xperf-on DiagEasy开始收集系统性能信息；</p>
+<p>使用xperf -d test.etl停止收集并将收集到的信息保存到etl文件中。</p>
+<p>4.2 WPA分析获取结果</p>
+<p>4.2.1 WPA分析界面简介</p>
+<p>整体界面展示</p>
+<p>双击生成的etl文件，可以看到WAP分析工具有6部分内容，分别是图像分析区(GraphExplorer)、时间轴、诊断输出台(Diagnostics Console)、分析区(Analysis)、详细资料展示区(Details)及顶部工具栏，如下图：</p>
+<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/wpa.png" alt="www"></p>
+<p>图像展示区(GraphExplorer)</p>
+<p>图像分析区主要是结果的管理区，可以看到每个项目有对应的下拉小三角，点击小三角，我们就可以看到每个项目下具体的结果展示。</p>
+<p>System Activity：系统活动，里面主要是进程线程的生命周期，原始事件等等内容；</p>
+<p>Computation：记录了CPU的各项活动；</p>
+<p>Storage：记录了磁盘的活动和文件的操作；</p>
+<p>Memory：记录了系统内存的变化。</p>
+<p>![www](Graph Explorer.png)</p>
+<p>分析区（Analysis)</p>
+<p>分析区主要展示了具体的分析结果，包括主要的Series(进程序列)、性能折线图、具体各项分析的tab表。以CPU为例，双击CPU，就可以得到分析结果。</p>
+<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis.png" alt="www"></p>
+<p>时间轴</p>
+<p>时间轴是和Analysis相关联的，展示的是分析性能的时间line。一般情况下只显示一个时间轴，如果有多个不同时间段的Analysis，则会展示多个时间轴。</p>
+<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/time.png" alt="www"></p>
+<p>诊断输出台(DiagnosticsConsole)</p>
+<p>和一般的控制台类似，主要是输出一些错误信息与log。</p>
+<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/console.png" alt="www"></p>
+<p>顶部工具栏</p>
+<p>顶部工具栏主要是打开文件(File)、跟踪调试(Trace)、窗口创建(Window)及帮助(Help)。常用的为跟踪调试中配置加载符号文件(Symbol)。</p>
+<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/tools.png" alt="www"></p>
+<p>4.2.2 WPA分析性能结果</p>
+<p>分析性能结果主要是第一部分介绍的图像分析区(Graph Explorer)和分析区(Analysis)，以CPU为例进行分析。</p>
+<p>STEP-1：展开Graph Explorer的Computation，双击CPU，可以看到如下图：</p>
+<p>![www](Graph Explorer2.png)</p>
+<p>STEP-2：选择不同的展现形式</p>
+<p>如果要看进程的CPU信息，则标签序列、底部tab都是以进程展示的，下拉选择最后一项：</p>
+<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis2.png" alt="www"></p>
+<p>如果要看每个CPU处理器的信息，则选择倒数第二项： </p>
+<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/cpu.png" alt="www"></p>
+<p>展开可看到每个CPU下的不同的进程信息：</p>
+<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/cpu2.png" alt="www"></p>
+<p>STEP-3：选择好具体要展现的形式之后，我们选择需要的图表展示</p>
+<p>默认选择的是折线图，可以更改其他类型的图表展示方式，具体视情况而定 :<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/step3.png" alt="www"></p>
+<p>STEP-4：选择需要展示的内容</p>
+<p>在Analysis分析区，我们可以选择展示的内容，比如只想看图表变化图、tab分析表和图表变化图、只看tab分析表等，如下图：<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/step4.png" alt="www"><br>注：一般建议使用图形加tab表，可以帮助更好的分析结果。</p>
+<p>STEP-5：分析结果</p>
+<p>以SogouExplorer.exe为例，我们想看在统计周期内的CPU变化情况，就可以找到对应的标签颜色，分析折线图，如下图：<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/step5.png" alt="www"><br>我们想看在统计周期内，进程总共占用多少资源，可以在tab表中找到是SogouExplorer.exe进程的，将所有的CPU资源占用情况求和：<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/process.png" alt="www"></p>
+<h3 id="五、踩过的坑"><a href="#五、踩过的坑" class="headerlink" title="五、踩过的坑"></a>五、踩过的坑</h3><p>WPR的启动、配置、解析有很多参数，不是很容易上手，这里说下几个踩过的坑。</p>
+<p>(1) 版本问题</p>
+<p>目前能下载到的版本有4.8 /6.3 /10.0，这几个版本的兼容性并不是很好，生成ETL文件后，一定注意要用同版本的WPR、WPA或是XPerfView去分析，用不同版本的话会有一些奇怪的问题，例如打开报错、看不到关键数据、闪退等。</p>
+<p>(2) 工具兼容性问题</p>
+<p>如果你正在使用ProcessMonitor或ProcessExplorer，需要先关闭它们再启动WPR，否则会报错，因为这两个工具也会通过ETW收集信息。</p>
+<p>(3) 参数问题</p>
+<p>WPR的启动参数很多，开的越多带来的额外系统开销也越多，ETL文件也越大。所以一定要按需配置，有针对性的开启需要的Provider。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" data-id="cki7kdbzn0006d4nl3j3n88qp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          linux性能分析
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/28/%E5%B8%A6%E4%BD%A0%E7%A0%B4%E8%A7%A3Android%E9%AB%98%E7%BA%A7%E9%9D%A2%E8%AF%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">带你破解Android高级面试</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/">Windows系统内存分析工具的介绍</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/">windows性能分析实例</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">linux性能分析</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">windows性能分析</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/28/%E5%B8%A6%E4%BD%A0%E7%A0%B4%E8%A7%A3Android%E9%AB%98%E7%BA%A7%E9%9D%A2%E8%AF%95/">带你破解Android高级面试</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 oldyang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
