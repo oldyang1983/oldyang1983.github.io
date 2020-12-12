@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>wsl | 老杨的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="修改wsl存储磁盘位置(释放系统盘空间)导出导入方式    关闭wsl          wsl --shutdown     查看系统信息          wsl -l -v         NAME            STATE           VERSION         * Ubuntu-20.04    Running         2                 导出">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wsl">
+<meta property="og:url" content="http://example.com/2020/12/12/wsl/index.html">
+<meta property="og:site_name" content="老杨的博客">
+<meta property="og:description" content="修改wsl存储磁盘位置(释放系统盘空间)导出导入方式    关闭wsl          wsl --shutdown     查看系统信息          wsl -l -v         NAME            STATE           VERSION         * Ubuntu-20.04    Running         2                 导出">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-12T01:00:49.000Z">
+<meta property="article:modified_time" content="2020-12-12T15:10:08.199Z">
+<meta property="article:author" content="oldyang">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="老杨的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">老杨的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-wsl" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/12/12/wsl/" class="article-date">
+  <time datetime="2020-12-12T01:00:49.000Z" itemprop="datePublished">2020-12-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      wsl
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="修改wsl存储磁盘位置-释放系统盘空间"><a href="#修改wsl存储磁盘位置-释放系统盘空间" class="headerlink" title="修改wsl存储磁盘位置(释放系统盘空间)"></a>修改wsl存储磁盘位置(释放系统盘空间)</h2><h3 id="导出导入方式"><a href="#导出导入方式" class="headerlink" title="导出导入方式"></a>导出导入方式</h3><pre><code>    关闭wsl 
+        wsl --shutdown
+    查看系统信息 
+        wsl -l -v
+        NAME            STATE           VERSION
+        * Ubuntu-20.04    Running         2            
+    导出系统 
+        wsl --export Ubuntu-20.04  E:\WSL\Ubuntu20.04-WSL2\ubuntu.tar
+    删除系统 
+        wsl --unregister Ubuntu-20.04
+    导入系统 指定新的位置
+        wsl --import Ubuntu-20.04 E:\WSL\Ubuntu-WSL2 E:\WSL\Ubuntu20.04-WSL2\ubuntu.tar</code></pre>
+<h2 id="c-开发环境搭建"><a href="#c-开发环境搭建" class="headerlink" title="c++开发环境搭建"></a>c++开发环境搭建</h2><h3 id="配置Ubuntu"><a href="#配置Ubuntu" class="headerlink" title="配置Ubuntu"></a>配置Ubuntu</h3><pre><code>2.1 替换软件源
+    # 备份原来的软件源
+    sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+    # 替换软件源
+    sudo sed -i &#39;s/security.ubuntu/mirrors.aliyun/g&#39; /etc/apt/sources.list
+    sudo sed -i &#39;s/archive.ubuntu/mirrors.aliyun/g&#39; /etc/apt/sources.list
+    # 更新软件源数据库
+    sudo apt update
+    # 更新系统(这个视网络情况而定)
+    sudo apt upgrade
+
+2.2 Ubuntu中管理软件常用的命令
+    apt install &lt;package name&gt; # 安装某软件
+    apt search &lt;package name&gt; # 搜索某软件
+    apt show &lt;package name&gt; # 显示软件信息
+    apt --help
+
+2.3 安装编译工具
+    sudo apt install build-essential autoconf # 包含了gcc、g++、make等工具</code></pre>
+<h3 id="WSL2下编写内核模块"><a href="#WSL2下编写内核模块" class="headerlink" title="WSL2下编写内核模块"></a>WSL2下编写内核模块</h3><pre><code>这段代码是最简单的内核模块：
+    #include &lt;linux/init.h&gt;
+    #include &lt;linux/module.h&gt;
+    #include &lt;linux/kernel.h&gt;
+    #include &lt;linux/moduleparam.h&gt;
+
+    MODULE_LICENSE(&quot;GPL&quot;);
+
+    static int __init mod_init(void)
+    &#123;
+        printk(KERN_ALERT &quot;Hello world\n&quot;);
+        return 0;
+    &#125;
+
+    static void __exit mod_exit(void)
+    &#123;
+        printk(KERN_ALERT &quot;Goodbye\n&quot;);
+    &#125;
+
+    module_init(mod_init);
+    module_exit(mod_exit);
+
+Makefile：
+    obj-m := firstmod.o
+
+    CURRENT_PATH := $(shell pwd)
+    VERSION_NUM := $(shell uname -r)
+    LINUX_PATH := /usr/src/linux-headers-$(VERSION_NUM)
+
+    all :
+        make -C $(LINUX_PATH) M=$(CURRENT_PATH) modules
+
+    clean :
+        make -C $(LINUX_PATH) M=$(CURRENT_PATH) clean
+
+如果我们直接执行make命令时，会报错
+很容易理解，系统中不存在/usr/src/linux-headers-*这个文件夹，因为WSL2毕竟是经过微软修改后的，没有自带源码，因此我们需要下载源码。使用uname -r命令查看系统版本，本机是4.19.84-microsoft-standard，然后使用如下命令下载：
+
+    wget https://github.com/microsoft/WSL2-Linux-Kernel/archive/4.19.84-microsoft-standard.tar.gz
+
+安装相关的依赖：
+    sudo apt-get install libelf-dev build-essential pkg-config
+    sudo apt-get install bison build-essential flex libssl-dev libelf-dev bc
+
+然后如下命令开始编译：
+    sudo tar xvzf 4.19.84-microsoft-standard.tar.gz
+    cd WSL2-Linux-Kernel-4.19.84-microsoft-standard
+    zcat /proc/config.gz &gt; .config
+    make -j $(nproc)               //Compile the kernel and modules
+    sudo make -j $(nproc) modules_install    
+
+完成编译后，创建软链接：
+    sudo ln -s /home/yao/WSL2-Linux-Kernel-4.19.84-microsoft-standard /usr/src/linux-headers-4.19.84-microsoft-standard
+
+请注意，这里的源码源地址请根据自己的实际情况进行修改。然后就可以make我们的模块了，查看实验结果了。    
+![www](1.webp)</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/12/12/wsl/" data-id="ckilvvxgf0009n4nl9syx6xlg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Windows系统内存分析工具的介绍</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/12/12/wsl/">wsl</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/">Windows系统内存分析工具的介绍</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/">windows性能分析实例</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">linux性能分析</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">windows性能分析</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 oldyang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
