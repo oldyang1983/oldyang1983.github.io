@@ -5,15 +5,22 @@
   
 
   
-  <title>归档: 2021/1 | 老杨的博客</title>
+  <title>如何让 VMWare 和 Hyper-V 共存 | 老杨的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="老杨的博客">
-<meta property="og:url" content="http://example.com/archives/2021/01/index.html">
+  <meta name="description" content="将 Windows 版本升级到 Windows 10 20H1 或更高版本。  将 VMWare Workstation&#x2F;Player 升级到 15.5.5 或更高版本，本文以 VMWare Player 为例。注意，在安装时，需要在如图所示的这一步勾选“自动安装 Windows Hypervisor Platform (WHP)”  运行 VMWare Workstation&#x2F;Player，新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何让 VMWare 和 Hyper-V 共存">
+<meta property="og:url" content="http://example.com/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/index.html">
 <meta property="og:site_name" content="老杨的博客">
+<meta property="og:description" content="将 Windows 版本升级到 Windows 10 20H1 或更高版本。  将 VMWare Workstation&#x2F;Player 升级到 15.5.5 或更高版本，本文以 VMWare Player 为例。注意，在安装时，需要在如图所示的这一步勾选“自动安装 Windows Hypervisor Platform (WHP)”  运行 VMWare Workstation&#x2F;Player，新">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/1.jpeg">
+<meta property="og:image" content="http://example.com/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/2.jpeg">
+<meta property="article:published_time" content="2021-01-17T02:59:56.000Z">
+<meta property="article:modified_time" content="2021-01-17T03:10:32.457Z">
 <meta property="article:author" content="oldyang">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/1.jpeg">
   
     <link rel="alternate" href="/atom.xml" title="老杨的博客" type="application/atom+xml">
   
@@ -62,59 +69,61 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/" class="archive-article-date">
-  <time datetime="2021-01-17T02:59:56.000Z" itemprop="datePublished">1月 17</time>
+        <section id="main"><article id="post-如何让-VMWare-和-Hyper-V-共存" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/" class="article-date">
+  <time datetime="2021-01-17T02:59:56.000Z" itemprop="datePublished">2021-01-17</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/">如何让 VMWare 和 Hyper-V 共存</a>
+    <h1 class="article-title" itemprop="name">
+      如何让 VMWare 和 Hyper-V 共存
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2021/01/03/%E5%90%B4%E6%99%93%E6%B3%A2-%E9%A2%84%E8%A7%812021/" class="archive-article-date">
-  <time datetime="2021-01-03T01:47:16.000Z" itemprop="datePublished">1月 3</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/01/03/%E5%90%B4%E6%99%93%E6%B3%A2-%E9%A2%84%E8%A7%812021/">吴晓波 预见2021</a>
-    </h1>
-  
+        <ol>
+<li><p>将 Windows 版本升级到 Windows 10 20H1 或更高版本。</p>
+</li>
+<li><p>将 VMWare Workstation/Player 升级到 15.5.5 或更高版本，本文以 VMWare Player 为例。注意，在安装时，需要在如图所示的这一步勾选“自动安装 Windows Hypervisor Platform (WHP)”<br><img src="/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/1.jpeg" alt="www"></p>
+</li>
+<li><p>运行 VMWare Workstation/Player，新建或导入虚拟机.</p>
+</li>
+<li><p>打开虚拟机的设置选项，找到“处理器”，去掉如图所示的三个选项前面的钩，点击“确定”<br><img src="/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/2.jpeg" alt="www"></p>
+</li>
+</ol>
 
-    </header>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/" data-id="ckk0kbsie000alonlf0n83o31" class="article-share-link">Share</a>
+      
+      
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2021/01/03/%E5%90%B4%E6%99%93%E6%B3%A2-%E9%A2%84%E8%A7%812021/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">吴晓波 预见2021</div>
+    </a>
   
+</nav>
 
+  
+</article>
 
 </section>
         
