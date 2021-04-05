@@ -64,6 +64,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-windows性能分析实例" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/" class="article-date">
+  <time datetime="2020-12-02T15:07:14.000Z" itemprop="datePublished">2020-12-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/">windows性能分析实例</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="利用WPA进行调用栈追踪（call-stack-trace）分析"><a href="#利用WPA进行调用栈追踪（call-stack-trace）分析" class="headerlink" title="利用WPA进行调用栈追踪（call stack trace）分析"></a>利用WPA进行调用栈追踪（call stack trace）分析</h3><p>下面来介绍调用栈追踪的步骤<br>1）首先打开我们的测试样例程序StackTrace.exe，该程序源码在我的Github上《WPT-sample》<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/1.jpg" alt="www"></p>
+<p>2）使用WPR记录系统状态生成日志文件，关于WPR和WPA的使用在博文《如何使用WPR和WPA记录系统状态》中有详细的讲述，这里不再赘述。注：勾选上CPU usage选项<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/2.jpg" alt="www"></p>
+<p>3）利用WPA打开生成的.etl日志文件，双击左侧栏的Computation项展开CPU系统活动记录<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/3.gif" alt="www"></p>
+<p>4）找到我们的StackTrace进程，右键Filter to Selection过滤掉其它进程的信息<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/4.gif" alt="www"></p>
+<p>5)展开[ROOT]项，就可以看到调用信息，但是现在我们缺少.pdb符号文件，所以只能看到调用模块，如下图<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/5.jpg" alt="www"></p>
+<p>6）配置我们自己的.pdb符号文件路径，那这个符号文件在哪里呢，就在我们解决方案的目录中！！其实在我们生成解决方案的时候，MSVC中的链接器就会自动为我们生成一个.pdb文件，这个文件当中描述了函数地址和函数名称的一些对应关系，现在我们要做的就是配置这个.pdb文件路径<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/6.jpg" alt="www"><br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/7.jpg" alt="www"><br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/8.jpg" alt="www"></p>
+<pre><code> 注：srv*C:\Symbols*http://msdl.microsoft.com/download/symbols是微软自身的符号文件，其中包含了系统调用的名称地址，初次加载可能需要下载这些符号文件</code></pre>
+<p>7）加载.pdb符号文件，初次加载的时候可能要等待一会儿<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/9.jpg" alt="www"></p>
+<p>8）加载完成后，展开[ROOT]项，便可以看到所有的函数调用过程和调用次数，下图是我的调用栈追踪图片。可以看出writeFunc这个函数被调用了1037次，带来了整个CPU90+%（0.6/0.62）的性能开销<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/10.jpg" alt="www"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/" data-id="ckn4he65k0009x4nl6rfagie8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-linux性能分析" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" class="article-date">
@@ -90,7 +135,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" data-id="ckn4gmy460005zcnl0wpfhc74" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" data-id="ckn4he65i0006x4nlfj7jgl7u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -211,7 +256,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" data-id="ckn4gmy470007zcnl18le5l54" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" data-id="ckn4he65j0008x4nl7zeu40g1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -275,7 +320,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/28/%E5%B8%A6%E4%BD%A0%E7%A0%B4%E8%A7%A3Android%E9%AB%98%E7%BA%A7%E9%9D%A2%E8%AF%95/" data-id="ckn4gmy4i000gzcnl7w268b7t" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/28/%E5%B8%A6%E4%BD%A0%E7%A0%B4%E8%A7%A3Android%E9%AB%98%E7%BA%A7%E9%9D%A2%E8%AF%95/" data-id="ckn4he65t000hx4nl4yh6eh7u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -322,7 +367,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/24/linux%E5%86%85%E6%A0%B8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8/" data-id="ckn4gmy450004zcnl2bjw58fm" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/24/linux%E5%86%85%E6%A0%B8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8/" data-id="ckn4he65h0005x4nl1i3c6yuu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -361,7 +406,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/20/%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/" data-id="ckn4gmy4l000jzcnlam5u4357" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/20/%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/" data-id="ckn4he65v000kx4nlbjfxdp6q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -425,7 +470,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/17/%E5%86%85%E5%8D%B7%E5%8C%96/" data-id="ckn4gmy4b000bzcnlh8m210j5" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/17/%E5%86%85%E5%8D%B7%E5%8C%96/" data-id="ckn4he65n000cx4nl5kt7fs0t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -465,7 +510,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/17/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" data-id="ckn4gmy4o000mzcnlfxgw617a" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/17/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" data-id="ckn4he660000nx4nlbelb84dx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -518,7 +563,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/14/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" data-id="ckn4gmy4q000ozcnla3bx4efv" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/14/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" data-id="ckn4he661000px4nlab9d2ubl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -563,44 +608,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/14/windows%E6%9D%83%E9%99%90/" data-id="ckn4gmy490009zcnl4mdqgdln" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-开发流" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/11/12/%E5%BC%80%E5%8F%91%E6%B5%81/" class="article-date">
-  <time datetime="2020-11-12T14:45:35.000Z" itemprop="datePublished">2020-11-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/12/%E5%BC%80%E5%8F%91%E6%B5%81/">开发流</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="开发流总结"><a href="#开发流总结" class="headerlink" title="开发流总结"></a>开发流总结</h2><p>1.需求分析<br>2.需求评审<br>3.技术评审<br>4.任务分配<br>5.任务排期和估时<br>6.代码建模(抽象)<br>7.编码(包含单元测试)<br>8.代码review+静态代码分析<br>9.联调(集成测试)<br>10.交付测试</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/12/%E5%BC%80%E5%8F%91%E6%B5%81/" data-id="ckn4gmy4j000hzcnl9m6r8zna" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/14/windows%E6%9D%83%E9%99%90/" data-id="ckn4he65l000ax4nldfkkgefy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -646,6 +654,10 @@
       <ul>
         
           <li>
+            <a href="/2021/04/05/Windows-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/">Windows 多线程模型</a>
+          </li>
+        
+          <li>
             <a href="/2021/04/05/%E9%AB%98%E5%86%85%E8%81%9A-%E4%BD%8E%E8%80%A6%E5%90%88/">高内聚 低耦合</a>
           </li>
         
@@ -659,10 +671,6 @@
         
           <li>
             <a href="/2021/04/05/io%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8Ccpu%E5%AF%86%E9%9B%86%E5%9E%8B/">io密集型和cpu密集型</a>
-          </li>
-        
-          <li>
-            <a href="/2021/01/18/%E7%BB%8F%E6%B5%8E/">经济</a>
           </li>
         
       </ul>
