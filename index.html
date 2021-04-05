@@ -64,6 +64,194 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-高内聚-低耦合" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/05/%E9%AB%98%E5%86%85%E8%81%9A-%E4%BD%8E%E8%80%A6%E5%90%88/" class="article-date">
+  <time datetime="2021-04-05T10:33:42.000Z" itemprop="datePublished">2021-04-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/05/%E9%AB%98%E5%86%85%E8%81%9A-%E4%BD%8E%E8%80%A6%E5%90%88/">高内聚 低耦合</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="高内聚-低耦合"><a href="#高内聚-低耦合" class="headerlink" title="高内聚 低耦合"></a>高内聚 低耦合</h2><p>起因：耦合性与内聚性是模块独立性的两个定性度量标准，将软件系统划分模块时，每个模块只完成系统要求的独立子功能，并且与其他模块的联系最少且接口简单，提高模块的独立性，为设计高质量的软件结构奠定基础。</p>
+<p>内聚：一个模块内各个元素彼此结合的紧密程度。<br>耦合：一个软件结构内不同模块之间互连程度的度量。<br>(耦合性也叫块间联系。指软件系统结构中个模块间相互联系紧密程度的一种度量。<br>模块之间联系越紧密，其耦合性就越强，模块的独立性则越差，模块间耦合的高低取决于模块间接口的复杂性，调用的方式以及传递的信息。)</p>
+<p>低耦合，粗浅的理解<br>耦合性也称块间联系。指软件系统结构中各模块间相互联系紧密程度的一种度量。模块之间联系越紧密，其耦合性就越强，模块的独立性则越差。模块间耦合高低取决于模块间接口的复杂性、调用的方式及传递的信息。</p>
+<p>也就是说，让每个模块，尽可能的独立完成某个特定的子功能。 模块与模块之间的接口，尽量的少而简单。<br>如果某两个模块间的关系比较复杂的话，最好首先考虑进一步的模块划分。 这样有利于修改和组合。</p>
+<p>高内聚，粗浅的理解<br>内聚性又称块内联系。指模块的功能强度的度量，即一个模块内部各个元素彼此结合的紧密程度的度量。若一个模块内各元素（语名之间、程序段之间）联系的越紧密，则它的内聚性就越高。</p>
+<p>也就是充分利用每一个元素的功能，各施所能，以最终实现某个功能。<br>如果某个元素与该模块的关系比较疏松的话，可能该模块的结构还不够完善，或者是该元素是多余的。</p>
+<p>分类<br>耦合性分类(低――高)<br>无直接耦合:<br>数据耦合: 指两个模块之间有调用关系，传递的是简单的数据值，相当于高级语言的值传递;<br>标记耦合: 指两个模块之间传递的是数据结构，如高级语言中的数组名、记录名、文件名等这些名字即标记，其实传递的是这个数据结构的地址;<br>控制耦合: 指一个模块调用另一个模块时，传递的是控制变量（如开关、标志等），被调模块通过该控制变量的值有选择地执行块内某一功能;<br>公共耦合: 指通过一个公共数据环境相互作用的那些模块间的耦合。公共耦合的复杂程序随耦合模块的个数增加而增加。<br>内容耦合: 这是最高程度的耦合，也是最差的耦合。当一个模块直接使用另一个模块的内部数据，或通过非正常入口而转入另一个模块内部。<br>内聚性分类(低――高)<br>偶然内聚: 指一个模块内的各处理元素之间没有任何联系。<br>逻辑内聚: 指模块内执行几个逻辑上相似的功能，通过参数确定该模块完成哪一个功能。<br>时间内聚: 把需要同时执行的动作组合在一起形成的模块为时间内聚模块。<br>通信内聚: 指模块内所有处理元素都在同一个数据结构上操作（有时称之为信息内聚），或者指各处理使用相同的输入数据或者产生相同的输出数据。<br>顺序内聚: 指一个模块中各个处理元素都密切相关于同一功能且必须顺序执行，前一功能元素输出就是下一功能元素的输入。<br>功能内聚: 这是最强的内聚，指模块内所有元素共同完成一个功能，缺一不可。与其他模块的耦合是最弱的。<br>如何做到高内聚、低耦合<br>内聚和耦合，包含了横向和纵向的关系。功能内聚和数据耦合，是我们需要达成的目标。横向的内聚和耦合，通常体现在系统的各个模块、类之间的关系，而纵向的耦合，体现在系统的各个层次之间的关系。</p>
+<p>对于我在编码中的困惑，我是这样想的，用面向对象的思想去考虑一个类的封装。 一个方法，如何封装，拿到现实生活中来看，看这种能力（方法）是否是属于这类事物（类）的本能。<br>如果是，就封装在这个类里。<br>如果不是，则考虑封装在其它类里。<br>如果这种能力，很多事物都具有，则一定要封装在这类事物的总类里。<br>如果这种能力，很多事物都会经常用到，则可以封装成一个总类的静态方法。</p>
+<p>某些模块必然要关联起来才能工作，这是由业务逻辑决定的，不能否认。所以解耦并不是字面意义上的把关联拆掉，而是把模块之间的关联放松到必要的程度。一些建议：</p>
+<p>模块只对外暴露最小限度的接口，形成最低的依赖关系。<br>只要对外接口不变，模块内部的修改，就不得影响其他模块；<br>删除一个模块，应当只影响有依赖关系的其他模块，而不应该影响其他无关部分；<br>软件工程有一条铁律“高内聚、低耦合”就是这个道理：必要的耦合不可否认，没有耦合程序就做不成事；但是不必要的紧耦合，就会让程序“牵一发而动全身”，最终让程序员的编写和维护都无从下手。</p>
+<p>人类同一时间只能专注于一小部分的内容。“高内聚、低耦合”就是为了满足人类的这个特点——小尺度上只专注一个模块，局部的编码工作才能够进行。大尺度上把具体代码转化为一些抽象的“模块”和“依赖关系”，才能够抓大放小，把握住程序的脉络，拼合出一个完整的产品。</p>
+<p>示例<br>有个例子很容易明白：一个程序有50个函数，这个程序执行得非常好；然而一旦你修改其中一个函数，其他49个函数都需要做修改，这就是高耦合的后果。</p>
+<p>想象一下“社会大分工”这个模型——每一个小单位只专注自己的业务部分，与其他单位只存在业务外包的关联，以及物质、信息的交互。事实已经证明：这样的模型比以前大国企“大包大揽”自办各种职能部门的效率，有量级程度的提高。这就是“高内聚、低耦合”在现实世界中的体现。</p>
+<p>总结<br>一旦你理解了它，你编写概要设计的时候设计类或者模块自然会考虑到“高内聚，低耦合”。<br>程序就是人类创造的第二世界，程序的逻辑无非是世界运行规律的抽象（面向对象比面向过程更加的切合现实世界）。跳出程序看程序，就会发现不一样的观点和角度。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/05/%E9%AB%98%E5%86%85%E8%81%9A-%E4%BD%8E%E8%80%A6%E5%90%88/" data-id="ckn4gmy4u000pzcnl6omb3iwu" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/05/%E7%AE%97%E6%B3%95/" class="article-date">
+  <time datetime="2021-04-05T10:32:36.000Z" itemprop="datePublished">2021-04-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/05/%E7%AE%97%E6%B3%95/">算法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p>软件性能<br>有两个导致软件性能差的根本原因。</p>
+<p>时间复杂度<br>解决这个问题很大程度上超出了本文的范围,一般可以这样说,时间复杂度是衡量一个程序需要做多少次的比较来实现一个结果。比较数量越多,程序越慢。一个简单的例子是线性查找与二分查找。线性查找对于同一组数据需要进行更多的比较,因此会慢。时间复杂度的详细讨论,请参考 维基百科文章。</p>
+<p>空间复杂度<br>这是一台电脑运行你的解决方案需要多少“空间”或内存的测量。需要的内存越多,解决方案就越慢。本文将讨论的大多数问题,围绕空间复杂度。详细讨论,请参阅这里.。</p>
+<p>为什么引用值要放在堆中，而原始值要放在栈中的问题：<br>记住一句话：能量是守衡的，无非是时间换空间，空间换时间的问题</p>
+<p>堆比栈大，栈比堆的运算速度快，对象是一个复杂的结构，并且可以自由扩展，如：数组可以无限扩充，对象可以自由添加属性。将他们放在堆中是为了不影响栈的效率。而是通过引用的方式查找到堆中的实际对象再进行操作。<br>相对于简单数据类型而言，简单数据类型就比较稳定，并且它只占据很小的内存。</p>
+<p>不将简单数据类型放在堆是因为通过引用到堆中查找实际对象是要花费时间的，而这个综合成本远大于直接从栈中取得实际值的成本。<br>所以简单数据类型的值直接存放在栈中。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/05/%E7%AE%97%E6%B3%95/" data-id="ckn4gmy4m000kzcnlberc4wut" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-框架和设计模式的区别" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/05/%E6%A1%86%E6%9E%B6%E5%92%8C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2021-04-05T10:30:52.000Z" itemprop="datePublished">2021-04-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/05/%E6%A1%86%E6%9E%B6%E5%92%8C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB/">框架和设计模式的区别</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="框架和设计模式的区别"><a href="#框架和设计模式的区别" class="headerlink" title="框架和设计模式的区别"></a>框架和设计模式的区别</h2><p>有很多程序员往往把框架模式和设计模式混淆，认为MVC是一种设计模式。实际上它们完全是不同的概念。</p>
+<p>框架、设计模式这两个概念总容易被混淆，其实它们之间还是有区别的。框架通常是代码重用，而设计模式是设计重用，架构则介于两者之间，部分代码重用，部分设计重用，有时分析也可重用。</p>
+<p>在软件生产中有三种级别的重用：</p>
+<p>内部重用，即在同一应用中能公共使用的抽象块；<br>代码重用，即将通用模块组合成库或工具集，以便在多个应用和领域都能使用；<br>应用框架的重用，即为专用领域提供通用的或现成的基础结构，以获得最高级别的重用性。<br>框架与设计模式虽然相似，但却有着根本的不同。设计模式是对在某种环境中反复出现的问题以及解决该问题的方案的描述，它比框架更抽象；框架可以用代码表示，也能直接执行或复用，而对模式而言只有实例才能用代码表示；设计模式是比框架更小的元素，一个框架中往往含有一个或多个设计模式，框架总是针对某一特定应用领域，但同一模式却可适用于各种应用。可以说，框架是软件，而设计模式是软件的知识。<br>框架模式有哪些？<br>MVC、MTV、MVP、CBD、ORM 等等；</p>
+<p>框架有哪些？<br>C++语言的QT、MFC、gtk，Java语言的 SSH 、SSI，php语言的 smarty(MVC模式)，python语言的django(MTV模式)等等</p>
+<p>设计模式有哪些？<br>工厂模式、适配器模式、策略模式等等</p>
+<p>简而言之：框架是大智慧，用来对软件设计进行分工；设计模式是小技巧，对具体问题提出解决方案，以提高代码复用率，降低耦合度。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/05/%E6%A1%86%E6%9E%B6%E5%92%8C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB/" data-id="ckn4gmy4k000izcnl55aodik8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-io密集型和cpu密集型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/05/io%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8Ccpu%E5%AF%86%E9%9B%86%E5%9E%8B/" class="article-date">
+  <time datetime="2021-04-05T10:11:34.000Z" itemprop="datePublished">2021-04-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/05/io%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8Ccpu%E5%AF%86%E9%9B%86%E5%9E%8B/">io密集型和cpu密集型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="如何设计CPU密集型与I-O密集型程序"><a href="#如何设计CPU密集型与I-O密集型程序" class="headerlink" title="如何设计CPU密集型与I/O密集型程序"></a>如何设计CPU密集型与I/O密集型程序</h2><p>核心是可以分别独立运行程序指令的计算单元。<br>线程是操作系统能够进行运算调度的最小单位。</p>
+<p>有一个原则是：活跃线程数为 CPU(核)数时最佳。过少的活跃线程导致 CPU 无法被充分利用，过多的活跃线程导致过大的线程上下文切换开销。</p>
+<p>总之：计算密集型程序适合C语言多线程，I/O密集型适合脚本语言开发的多线程。</p>
+<p>1.计算密集型线程池</p>
+<p>cpu使用率较高（也就是一些复杂运算，逻辑处理），所以线程数一般只需要cpu核数的线程就可以了。 这一类型的在开发中多出现的一些业务复杂计算和逻辑处理过程中。</p>
+<p>数量一般为 N+1个   N为CPU核心数</p>
+<p>解决方案：</p>
+<p>计算密集型任务由于主要消耗CPU资源，因此，代码运行效率至关重要。Python这样的脚本语言运行效率很低，完全不适合计算密集型任务。对于计算密集型任务，最好用C语言编写。</p>
+<p>多用来做计算、逻辑判断等cpu操作。可考虑通过消息队列或其他降维算法，将计算分散到不同的计算节点</p>
+<p>对于计算密集型的需求，在开发过程中，需要注意计算算法的优化及结果重用，并尽可能进行降维处理，比如通过某种算法将原业务需求的计算分散成可拆分的逻辑，并分散计算进行结果求解，最后进行组合(很像现在大数据处理里的一些模式，可以参考)，或通过消息队列将大量的计算请求分发到其它的计算结点上去。</p>
+<p>2.IO密集型</p>
+<p>cpu使用率较低，程序中会存在大量I/O操作占据时间，导致线程空余时间出来，所以通常就需要开cpu核数的两倍的线程， 当线程进行I/O操作cpu空暇时启用其他线程继续使用cpu，提高cpu使用率 </p>
+<p>通过上述可以总结出：最佳线程数目 = （（线程等待时间+线程CPU时间）/线程CPU时间 ）* CPU数目 线程等待时间所占比例越高，需要越多线程。(线程数等于IO任务数是最佳的)</p>
+<p>线程CPU时间所占比例越高，需要越少线程。这一类型在开发中主要出现在一些读写操作频繁的业务逻辑中。<br>数量一般为：2N + 1个  N为CPU核心数</p>
+<p>场景和解决方案<br>在服务器上进行网络通讯、网络传输、磁盘读写等均为IO操作，多为网络请求压力大、磁盘读写频繁的操作</p>
+<p>io密集型的可能需要对磁盘进行升级、提高磁盘的相应速度和传输效率或通过负载技术将文件读写分散到多台服务器中；如果网络请求负载较高，可通过负载均衡技术、水平扩展提高负载。</p>
+<p>于IO密集型的需求，在开发过程中，就要考虑尽可能减少IO开销，对磁盘读写频繁的业务，可以考虑通过内存缓存将热数据缓存起来，减少磁盘的请求。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/05/io%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8Ccpu%E5%AF%86%E9%9B%86%E5%9E%8B/" data-id="ckn4gmy440003zcnlbufveeqx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-经济" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/01/18/%E7%BB%8F%E6%B5%8E/" class="article-date">
@@ -150,7 +338,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/01/18/%E7%BB%8F%E6%B5%8E/" data-id="ckk2op41q000ip4nl9ug35kr4" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/01/18/%E7%BB%8F%E6%B5%8E/" data-id="ckn4gmy4n000lzcnlh0tn1mqx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -196,7 +384,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/" data-id="ckk2op41m000dp4nlgat91mke" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/" data-id="ckn4gmy4g000ezcnl4dyx101p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -263,7 +451,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/01/03/%E5%90%B4%E6%99%93%E6%B3%A2-%E9%A2%84%E8%A7%812021/" data-id="ckk2op41l000bp4nl2hk996q8" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/01/03/%E5%90%B4%E6%99%93%E6%B3%A2-%E9%A2%84%E8%A7%812021/" data-id="ckn4gmy4d000czcnl2ihe8w4m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -400,7 +588,7 @@ Makefile：
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/12/12/wsl/" data-id="ckk2op41j0009p4nl73550206" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/12/12/wsl/" data-id="ckn4gmy4a000azcnlape621fo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -458,7 +646,7 @@ Makefile：
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/" data-id="ckk2op41c0002p4nlb96iejis" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/" data-id="ckn4gmy420001zcnlh0b2a7d7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -503,275 +691,7 @@ Makefile：
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/" data-id="ckk2op41f0005p4nl6wkgaaj9" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-linux性能分析" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" class="article-date">
-  <time datetime="2020-12-02T14:42:01.000Z" itemprop="datePublished">2020-12-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">linux性能分析</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="gprof是可用于Linux-C-代码性能profiling的工具之一"><a href="#gprof是可用于Linux-C-代码性能profiling的工具之一" class="headerlink" title="gprof是可用于Linux C++代码性能profiling的工具之一"></a>gprof是可用于Linux C++代码性能profiling的工具之一</h3><h3 id="gperftools的使用"><a href="#gperftools的使用" class="headerlink" title="gperftools的使用"></a>gperftools的使用</h3>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" data-id="ckk2op41e0004p4nlbkifa6am" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-windows性能分析" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" class="article-date">
-  <time datetime="2020-12-02T14:36:01.000Z" itemprop="datePublished">2020-12-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">windows性能分析</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>QQ浏览器性能提升之路——windows性能分析工具篇<br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1037284">https://cloud.tencent.com/developer/article/1037284</a></p>
-<h3 id="一、-Windows性能工具包简介"><a href="#一、-Windows性能工具包简介" class="headerlink" title="一、 Windows性能工具包简介"></a>一、 Windows性能工具包简介</h3><p>(1) Windows性能工具包(Windows Performance Toolkit，简称WPT)有两个主要组件：Windows Performance Recorder(WPR)和Windows Performance Analyzer(WPA);</p>
-<p>(2) WPR用来追踪CPU使用率、磁盘I/O、文件、网络、GPU活动、电源使用情况等，借助ETW技术框架实现，将以上信息保存在ETL文件中;</p>
-<p>(3) WPA辅助WPR使用，用来可视化分析ETL文件，从而确定系统性能瓶颈</p>
-<h3 id="二、Windows性能工具包安装"><a href="#二、Windows性能工具包安装" class="headerlink" title="二、Windows性能工具包安装"></a>二、Windows性能工具包安装</h3><p>下载安装Windows ADK得到 Windows 性能工具包 (WPT)，<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/archive/blogs/pigscanfly/xperf-a-new-tool-in-the-windows-sdk">https://docs.microsoft.com/en-us/archive/blogs/pigscanfly/xperf-a-new-tool-in-the-windows-sdk</a></p>
-<p>2.2 安装</p>
-<p>(1) 默认安装路径：C:\Program Files (x86)\Windows Kits\8.1\WindowsPerformance Toolkit</p>
-<p>(2) 安装文件：<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/install.png" alt="www"></p>
-<p>(3) 文件简介</p>
-<p>wpa.exe —解析ETL文件，并图形化、表格化展示。</p>
-<p>wpaexporter.exe —导出ETL文件的解析结果成文本格式。</p>
-<p>wpr.exe —记录ETW产生的数据，命令行模式。</p>
-<p>WPRUI.exe —记录ETW产生的数据，图形化界面，更友好。</p>
-<p>xperf.exe —早期版本WPT的核心组件，所以现在习惯将WPT称为XPerf。XPerf的功能类似于wpr+wpaexporter，可以记录ETW产生的数据，也可以导出结果到文本。</p>
-<p>xperfview.exe —早期版本WPT中的分析工具，功能和现在的WPA一样，WPT从版本8以后已经没有这个exe了。在WinXP上只能使用旧版的XPerf，而且建议用对应的xperfview打开分析。</p>
-<h3 id="三、Windows性能工具包工作原理"><a href="#三、Windows性能工具包工作原理" class="headerlink" title="三、Windows性能工具包工作原理"></a>三、Windows性能工具包工作原理</h3><p>3.1 WPR工作原理——ETW技术框架</p>
-<p>CONTROLLERS：启动和停止Events发送，以及log路径和大小设置，以及Provider的选择允许；WPR就是一个Controllers，它会使用StartTrace等API来开启信息追踪。</p>
-<p>PROVIDERS：不同类型的Event产生者。例如线程、网络、I/O、CPU、内存等各种Provider，它会使用WriteEvent来记录信息。</p>
-<p>CONSUMERS：已产生Event的使用者；WPA就是使用者，用来做可视化分析，它会解析logfile以获取结果。</p>
-<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/tool.png" alt="www"></p>
-<p>3.2 WPA工作原理——DataTable</p>
-<p>Key area：用这一组维度数据作为统计关键字，通常需要正确搭配，例如Process可以搭配Thread。</p>
-<p>Data area：数据统计区，这里可以是消耗时间costtime、次数等。</p>
-<p>Graphing element area：绘制区，这里可以是时间间隔duringtime、权重占比Weight等</p>
-<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/datatable.png" alt="www"></p>
-<h3 id="四、Windows性能工具实例分析"><a href="#四、Windows性能工具实例分析" class="headerlink" title="四、Windows性能工具实例分析"></a>四、Windows性能工具实例分析</h3><p>4.1 WPR追踪获取信息</p>
-<p>4.1.1 WPR命令简介</p>
-<p>WPR的使用是通过命令行的形式来完成的。常见的命令如下：</p>
-<pre><code> -start [SessionName]：需要启动的Session Name，只记录kernel logging的话Name可以为空
- -on Flags|Groups：指定需要开启的provider flags or groups，通过加号(+)分隔 
- -f filename：指定写入的文件名字，Kernel trace默认是Kernel.etl, user trace默认是User.etl 
- -maxfile Size：限定日志文件的大小，单位MB 
- -filemode Mode：指定文件写入模式，默认是&quot;Sequential&quot;，还有&quot;Circular&quot;, &quot;Append&quot;,&quot;NewFile&quot;
- -stackwalk flags|@file：开启call stack的记录</code></pre>
-<p>4.1.2 生成ETL文件</p>
-<p>使用xperf-on DiagEasy开始收集系统性能信息；</p>
-<p>使用xperf -d test.etl停止收集并将收集到的信息保存到etl文件中。</p>
-<p>4.2 WPA分析获取结果</p>
-<p>4.2.1 WPA分析界面简介</p>
-<p>整体界面展示</p>
-<p>双击生成的etl文件，可以看到WAP分析工具有6部分内容，分别是图像分析区(GraphExplorer)、时间轴、诊断输出台(Diagnostics Console)、分析区(Analysis)、详细资料展示区(Details)及顶部工具栏，如下图：</p>
-<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/wpa.png" alt="www"></p>
-<p>图像展示区(GraphExplorer)</p>
-<p>图像分析区主要是结果的管理区，可以看到每个项目有对应的下拉小三角，点击小三角，我们就可以看到每个项目下具体的结果展示。</p>
-<p>System Activity：系统活动，里面主要是进程线程的生命周期，原始事件等等内容；</p>
-<p>Computation：记录了CPU的各项活动；</p>
-<p>Storage：记录了磁盘的活动和文件的操作；</p>
-<p>Memory：记录了系统内存的变化。</p>
-<p>![www](Graph Explorer.png)</p>
-<p>分析区（Analysis)</p>
-<p>分析区主要展示了具体的分析结果，包括主要的Series(进程序列)、性能折线图、具体各项分析的tab表。以CPU为例，双击CPU，就可以得到分析结果。</p>
-<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis.png" alt="www"></p>
-<p>时间轴</p>
-<p>时间轴是和Analysis相关联的，展示的是分析性能的时间line。一般情况下只显示一个时间轴，如果有多个不同时间段的Analysis，则会展示多个时间轴。</p>
-<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/time.png" alt="www"></p>
-<p>诊断输出台(DiagnosticsConsole)</p>
-<p>和一般的控制台类似，主要是输出一些错误信息与log。</p>
-<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/console.png" alt="www"></p>
-<p>顶部工具栏</p>
-<p>顶部工具栏主要是打开文件(File)、跟踪调试(Trace)、窗口创建(Window)及帮助(Help)。常用的为跟踪调试中配置加载符号文件(Symbol)。</p>
-<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/tools.png" alt="www"></p>
-<p>4.2.2 WPA分析性能结果</p>
-<p>分析性能结果主要是第一部分介绍的图像分析区(Graph Explorer)和分析区(Analysis)，以CPU为例进行分析。</p>
-<p>STEP-1：展开Graph Explorer的Computation，双击CPU，可以看到如下图：</p>
-<p>![www](Graph Explorer2.png)</p>
-<p>STEP-2：选择不同的展现形式</p>
-<p>如果要看进程的CPU信息，则标签序列、底部tab都是以进程展示的，下拉选择最后一项：</p>
-<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/analysis2.png" alt="www"></p>
-<p>如果要看每个CPU处理器的信息，则选择倒数第二项： </p>
-<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/cpu.png" alt="www"></p>
-<p>展开可看到每个CPU下的不同的进程信息：</p>
-<p><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/cpu2.png" alt="www"></p>
-<p>STEP-3：选择好具体要展现的形式之后，我们选择需要的图表展示</p>
-<p>默认选择的是折线图，可以更改其他类型的图表展示方式，具体视情况而定 :<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/step3.png" alt="www"></p>
-<p>STEP-4：选择需要展示的内容</p>
-<p>在Analysis分析区，我们可以选择展示的内容，比如只想看图表变化图、tab分析表和图表变化图、只看tab分析表等，如下图：<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/step4.png" alt="www"><br>注：一般建议使用图形加tab表，可以帮助更好的分析结果。</p>
-<p>STEP-5：分析结果</p>
-<p>以SogouExplorer.exe为例，我们想看在统计周期内的CPU变化情况，就可以找到对应的标签颜色，分析折线图，如下图：<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/step5.png" alt="www"><br>我们想看在统计周期内，进程总共占用多少资源，可以在tab表中找到是SogouExplorer.exe进程的，将所有的CPU资源占用情况求和：<br><img src="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/process.png" alt="www"></p>
-<h3 id="五、踩过的坑"><a href="#五、踩过的坑" class="headerlink" title="五、踩过的坑"></a>五、踩过的坑</h3><p>WPR的启动、配置、解析有很多参数，不是很容易上手，这里说下几个踩过的坑。</p>
-<p>(1) 版本问题</p>
-<p>目前能下载到的版本有4.8 /6.3 /10.0，这几个版本的兼容性并不是很好，生成ETL文件后，一定注意要用同版本的WPR、WPA或是XPerfView去分析，用不同版本的话会有一些奇怪的问题，例如打开报错、看不到关键数据、闪退等。</p>
-<p>(2) 工具兼容性问题</p>
-<p>如果你正在使用ProcessMonitor或ProcessExplorer，需要先关闭它们再启动WPR，否则会报错，因为这两个工具也会通过ETW收集信息。</p>
-<p>(3) 参数问题</p>
-<p>WPR的启动参数很多，开的越多带来的额外系统开销也越多，ETL文件也越大。所以一定要按需配置，有针对性的开启需要的Provider。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" data-id="ckk2op41h0007p4nl55dae4iz" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-带你破解Android高级面试" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/11/28/%E5%B8%A6%E4%BD%A0%E7%A0%B4%E8%A7%A3Android%E9%AB%98%E7%BA%A7%E9%9D%A2%E8%AF%95/" class="article-date">
-  <time datetime="2020-11-28T13:37:51.000Z" itemprop="datePublished">2020-11-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/28/%E5%B8%A6%E4%BD%A0%E7%A0%B4%E8%A7%A3Android%E9%AB%98%E7%BA%A7%E9%9D%A2%E8%AF%95/">带你破解Android高级面试</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="梳理自身的技能"><a href="#梳理自身的技能" class="headerlink" title="梳理自身的技能"></a>梳理自身的技能</h3><ul>
-<li><p>编程语言功底</p>
-<ul>
-<li>熟悉语言的哪些特性</li>
-<li>能运用这些特性写框架吗</li>
-</ul>
-</li>
-<li><p>系统的运行原理</p>
-<ul>
-<li>程序是怎么运行的</li>
-<li>窗口是怎么显示的</li>
-<li>声音是怎么播放的</li>
-</ul>
-</li>
-<li><p>项目经验</p>
-<ul>
-<li>有哪些难点如何突破</li>
-<li>有哪些失败之处</li>
-</ul>
-</li>
-<li><p>架构设计</p>
-<ul>
-<li>为什么选择这个方案？</li>
-<li>如何进行模块边界的划分？</li>
-<li>如何实现模块的解耦</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/28/%E5%B8%A6%E4%BD%A0%E7%A0%B4%E8%A7%A3Android%E9%AB%98%E7%BA%A7%E9%9D%A2%E8%AF%95/" data-id="ckk2op41o000fp4nl5z4i50b7" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-linux内核分析与应用" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/11/24/linux%E5%86%85%E6%A0%B8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8/" class="article-date">
-  <time datetime="2020-11-24T14:30:52.000Z" itemprop="datePublished">2020-11-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/24/linux%E5%86%85%E6%A0%B8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8/">linux内核分析与应用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-linux操作系统概述"><a href="#1-linux操作系统概述" class="headerlink" title="1 linux操作系统概述"></a>1 linux操作系统概述</h3><ul>
-<li><p>内核设计理念：机制与策略分离<br>机制-提供什么样的功能<br>策略-如何使用这些功能</p>
-</li>
-<li><p>隔离变化-系统调用机制</p>
-</li>
-</ul>
-<h3 id="2-linux的内核结构和内核模块编程"><a href="#2-linux的内核结构和内核模块编程" class="headerlink" title="2 linux的内核结构和内核模块编程"></a>2 linux的内核结构和内核模块编程</h3><ul>
-<li> 单内核与微内核</li>
-<li>linux内核源码目录结构</li>
-<li>可加载的内核模块</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/24/linux%E5%86%85%E6%A0%B8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8/" data-id="ckk2op41d0003p4nlamu11of4" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/" data-id="ckn4gmy480008zcnl7k4s9zbp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -804,7 +724,7 @@ Makefile：
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li></ul>
     </div>
   </div>
 
@@ -817,23 +737,23 @@ Makefile：
       <ul>
         
           <li>
+            <a href="/2021/04/05/%E9%AB%98%E5%86%85%E8%81%9A-%E4%BD%8E%E8%80%A6%E5%90%88/">高内聚 低耦合</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/05/%E7%AE%97%E6%B3%95/">算法</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/05/%E6%A1%86%E6%9E%B6%E5%92%8C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB/">框架和设计模式的区别</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/05/io%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8Ccpu%E5%AF%86%E9%9B%86%E5%9E%8B/">io密集型和cpu密集型</a>
+          </li>
+        
+          <li>
             <a href="/2021/01/18/%E7%BB%8F%E6%B5%8E/">经济</a>
-          </li>
-        
-          <li>
-            <a href="/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/">如何让 VMWare 和 Hyper-V 共存</a>
-          </li>
-        
-          <li>
-            <a href="/2021/01/03/%E5%90%B4%E6%99%93%E6%B3%A2-%E9%A2%84%E8%A7%812021/">吴晓波 预见2021</a>
-          </li>
-        
-          <li>
-            <a href="/2020/12/12/wsl/">wsl</a>
-          </li>
-        
-          <li>
-            <a href="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/">Windows系统内存分析工具的介绍</a>
           </li>
         
       </ul>

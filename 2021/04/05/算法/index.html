@@ -5,17 +5,17 @@
   
 
   
-  <title>DDD | 老杨的博客</title>
+  <title>算法 | 老杨的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##软件核心复杂性应对之道  改变传统的数据库建模方法 DDD先对业务领域进行建模，建立领域模型，根据领域模型驱动代码设计。合理运行面向对象高内聚低耦合设计要素，降低系统业务复杂度，系统具有更好的扩展性，更好的应对多变的业务需求  ##领域 Domain 什么是领域？答:一个领域就是一个问题域，统一个领域问题域相同 确定领域的作用是什么？答: 驱动系统所属的领域，系统的核心业务即要解决问题及问题的">
+  <meta name="description" content="算法软件性能有两个导致软件性能差的根本原因。 时间复杂度解决这个问题很大程度上超出了本文的范围,一般可以这样说,时间复杂度是衡量一个程序需要做多少次的比较来实现一个结果。比较数量越多,程序越慢。一个简单的例子是线性查找与二分查找。线性查找对于同一组数据需要进行更多的比较,因此会慢。时间复杂度的详细讨论,请参考 维基百科文章。 空间复杂度这是一台电脑运行你的解决方案需要多少“空间”或内存的测量。需要">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DDD">
-<meta property="og:url" content="http://example.com/2020/11/07/DDD/index.html">
+<meta property="og:title" content="算法">
+<meta property="og:url" content="http://example.com/2021/04/05/%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="老杨的博客">
-<meta property="og:description" content="##软件核心复杂性应对之道  改变传统的数据库建模方法 DDD先对业务领域进行建模，建立领域模型，根据领域模型驱动代码设计。合理运行面向对象高内聚低耦合设计要素，降低系统业务复杂度，系统具有更好的扩展性，更好的应对多变的业务需求  ##领域 Domain 什么是领域？答:一个领域就是一个问题域，统一个领域问题域相同 确定领域的作用是什么？答: 驱动系统所属的领域，系统的核心业务即要解决问题及问题的">
+<meta property="og:description" content="算法软件性能有两个导致软件性能差的根本原因。 时间复杂度解决这个问题很大程度上超出了本文的范围,一般可以这样说,时间复杂度是衡量一个程序需要做多少次的比较来实现一个结果。比较数量越多,程序越慢。一个简单的例子是线性查找与二分查找。线性查找对于同一组数据需要进行更多的比较,因此会慢。时间复杂度的详细讨论,请参考 维基百科文章。 空间复杂度这是一台电脑运行你的解决方案需要多少“空间”或内存的测量。需要">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-11-07T15:43:08.000Z">
-<meta property="article:modified_time" content="2020-11-07T16:03:21.853Z">
+<meta property="article:published_time" content="2021-04-05T10:32:36.000Z">
+<meta property="article:modified_time" content="2021-04-05T10:33:00.825Z">
 <meta property="article:author" content="oldyang">
 <meta name="twitter:card" content="summary">
   
@@ -66,10 +66,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-DDD" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-算法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/11/07/DDD/" class="article-date">
-  <time datetime="2020-11-07T15:43:08.000Z" itemprop="datePublished">2020-11-07</time>
+    <a href="/2021/04/05/%E7%AE%97%E6%B3%95/" class="article-date">
+  <time datetime="2021-04-05T10:32:36.000Z" itemprop="datePublished">2021-04-05</time>
 </a>
     
   </div>
@@ -80,7 +80,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      DDD
+      算法
     </h1>
   
 
@@ -88,51 +88,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##软件核心复杂性应对之道</p>
-<ol>
-<li>改变传统的数据库建模方法</li>
-<li>DDD先对业务领域进行建模，建立领域模型，根据领域模型驱动代码设计。合理运行面向对象高内聚低耦合设计要素，降低系统业务复杂度，系统具有更好的扩展性，更好的应对多变的业务需求</li>
-</ol>
-<p>##领域 Domain</p>
-<p>什么是领域？<br>答:一个领域就是一个问题域，统一个领域问题域相同</p>
-<p>确定领域的作用是什么？<br>答: 驱动系统所属的领域，系统的核心业务即要解决问题及问题的边界基本就确定了。</p>
-<p>例子：<br>陌生人设计领域，包含聊天，用户推荐，朋友圈等核心业务。主要是这个领域，一般都会相同的核心业务，他们解决问题的本质是一样的，就是交友</p>
-<ul>
-<li>社交领域：关键问题是用户推荐，聊天</li>
-<li>电商领域：关键问题是购物，订单，物流</li>
-</ul>
-<p>##什么是子域？<br>答：复杂的领域拆分多个子域</p>
-<p>子域的分类</p>
-<ol>
-<li>核心域</li>
-<li>支撑子域</li>
-<li>通用子域</li>
-</ol>
-<p>列子：社交领域的划分</p>
-<ul>
-<li>核心域：用户推荐 聊天</li>
-<li>支撑子域：客服 反垃圾</li>
-<li>通用子域：消息推送</li>
-</ul>
-<p>##驱动设计</p>
-<ol>
-<li>以领域边界，分析核心问题</li>
-<li>设计对应的领域模型</li>
-<li>通过领域模型驱动代码设计的实现</li>
-<li>设计合理的分层和解耦</li>
-</ol>
-<p>##概念总结</p>
-<ul>
-<li>领域就是问题域</li>
-<li>模型驱动的思想: 通过建立领域模型来解决核心问题</li>
-<li>领域模型的目标: 针对领域的核心问题，不是所有问题</li>
-<li>领域模型设计:  考虑抽象性 通用 复用</li>
-</ul>
+        <h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p>软件性能<br>有两个导致软件性能差的根本原因。</p>
+<p>时间复杂度<br>解决这个问题很大程度上超出了本文的范围,一般可以这样说,时间复杂度是衡量一个程序需要做多少次的比较来实现一个结果。比较数量越多,程序越慢。一个简单的例子是线性查找与二分查找。线性查找对于同一组数据需要进行更多的比较,因此会慢。时间复杂度的详细讨论,请参考 维基百科文章。</p>
+<p>空间复杂度<br>这是一台电脑运行你的解决方案需要多少“空间”或内存的测量。需要的内存越多,解决方案就越慢。本文将讨论的大多数问题,围绕空间复杂度。详细讨论,请参阅这里.。</p>
+<p>为什么引用值要放在堆中，而原始值要放在栈中的问题：<br>记住一句话：能量是守衡的，无非是时间换空间，空间换时间的问题</p>
+<p>堆比栈大，栈比堆的运算速度快，对象是一个复杂的结构，并且可以自由扩展，如：数组可以无限扩充，对象可以自由添加属性。将他们放在堆中是为了不影响栈的效率。而是通过引用的方式查找到堆中的实际对象再进行操作。<br>相对于简单数据类型而言，简单数据类型就比较稳定，并且它只占据很小的内存。</p>
+<p>不将简单数据类型放在堆是因为通过引用到堆中查找实际对象是要花费时间的，而这个综合成本远大于直接从栈中取得实际值的成本。<br>所以简单数据类型的值直接存放在栈中。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/07/DDD/" data-id="ckn4gmy3w0000zcnl2bz51mw7" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/04/05/%E7%AE%97%E6%B3%95/" data-id="ckn4gmy4m000kzcnlberc4wut" class="article-share-link">Share</a>
       
       
     </footer>
@@ -141,19 +107,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2020/11/08/npm%E4%BD%BF%E7%94%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/04/05/%E9%AB%98%E5%86%85%E8%81%9A-%E4%BD%8E%E8%80%A6%E5%90%88/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          npm使用
+          高内聚 低耦合
         
       </div>
     </a>
   
   
-    <a href="/2020/11/01/%E9%9A%8F%E7%AC%94/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/04/05/%E6%A1%86%E6%9E%B6%E5%92%8C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">随笔</div>
+      <div class="article-nav-title">框架和设计模式的区别</div>
     </a>
   
 </nav>
