@@ -64,6 +64,62 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-如何运用面向对象建模" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/10/%E5%A6%82%E4%BD%95%E8%BF%90%E7%94%A8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%BB%BA%E6%A8%A1/" class="article-date">
+  <time datetime="2021-04-10T07:50:59.000Z" itemprop="datePublished">2021-04-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/10/%E5%A6%82%E4%BD%95%E8%BF%90%E7%94%A8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%BB%BA%E6%A8%A1/">如何运用面向对象建模</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="如何运用面向对象建模"><a href="#如何运用面向对象建模" class="headerlink" title="如何运用面向对象建模"></a>如何运用面向对象建模</h2><ul>
+<li>模型的直接构造成分是类，通过类以及类之间的关系描述整个系统</li>
+<li>该思想来源与人类的日常思维方案：<ul>
+<li>从个别事物上升到一般概念的归纳过程</li>
+<li>从一般到个别的演绎过程</li>
+</ul>
+</li>
+<li>在OOPL中<ul>
+<li>类定义所有对象</li>
+<li>类创建对象实例</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>归纳：<br>从对象出发认识问题域<br>将问题域中的实物抽象为对象<br>将具有共同特性的对象抽象为类用类以及他们之间的关系构成体系统模型</p>
+<ul>
+<li>演绎<br>在模型中用类表示属于该类的任何对象<br>在类的规约中说明这个类创建的哪些对象实例</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/10/%E5%A6%82%E4%BD%95%E8%BF%90%E7%94%A8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%BB%BA%E6%A8%A1/" data-id="cknbg4rrp000dr0nl71sifdn1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Windows-多线程模型" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/04/05/Windows-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/" class="article-date">
@@ -93,13 +149,14 @@
 <p>Windows 的调度算法是一个抢占式的、支持多处理器的优先级调度算法，它为每个处理器定义了一个链表数组，相同优先级的线程挂在同一个链表中，不同优先级的线程分别属于不同的链表。当一个线程满足了执行条件时，它首先被挂到当前处理器的一个待分配的链表（称为延迟的就绪链表）中，然后调度器会在适当的时候（当它获得了控制权时）把待分配链表上的线程分配到某个处理器的对应优先级的线程链表中。当这个处理器在选择下一个要运行的线程时，会根据优先级准则选择此线程（如果没有同等或更高优先级的线程也在等待运行的话）。Windows 中线程的优先级调整考虑到了很多因素，例如前台线程、等待I/O 完成后的线程也有轻微的优先级提升，这是一些来自实践经验的设计细节，它们使得Windows 操作系统对于交互式应用程序有更好的性能表现。</p>
 <p>线程与进程的关系:</p>
 <p>现在，我们来看一下线程与进程之间的关系。在不支持线程语义的系统中，进程提供了一个完全的执行环境，同时也有一个控制流完成其预定的功能，如图3.3(a)所示。操作系统按进程来分配处理器资源。在这种系统中，对线程的支持可以在用户模式下完成，即用户级线程模型，如图3.3(b)所示。在支持内核级线程的系统中，进程仅提供一个执行环境，它包含一个或者多个线程，每个线程代表一个单独的指令流，操作系统按线程来分配处理器资源，如图3.3(c)所示。Windows 中的线程是内核级线程，所以，它与进程之间的关系属于图3.3(c)所描述的情形。<br><img src="/2021/04/05/Windows-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/1.jpg" alt="www"></p>
+<p>Windows NT和OS/2支持内核线程。Linux 支持内核级的多线程。</p>
 <p>关于进程是否存在调度时间片？？？</p>
 <p>我们看到了多个进程共享一个处理器时实际上是按照某种规则轮换执行的。当一个进程执行了一段时间以后，下一个进程被选出来占有处理器，继续它的指令流序列。这便是进程调度算法。如果一个操作系统支持内核级线程，那么，处理器资源的调度通常在线程而非进程粒度上进行。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/04/05/Windows-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/" data-id="ckn4he65c0001x4nlcqfi3ped" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/04/05/Windows-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/" data-id="cknbg4rrg0004r0nl3d039c9j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -149,7 +206,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/04/05/%E9%AB%98%E5%86%85%E8%81%9A-%E4%BD%8E%E8%80%A6%E5%90%88/" data-id="ckn4he662000qx4nl2lxuc0ef" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/04/05/%E9%AB%98%E5%86%85%E8%81%9A-%E4%BD%8E%E8%80%A6%E5%90%88/" data-id="cknbg4rs0000or0nl3cts3eay" class="article-share-link">Share</a>
       
       
     </footer>
@@ -191,7 +248,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/04/05/%E7%AE%97%E6%B3%95/" data-id="ckn4he65w000lx4nl1xdeewy5" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/04/05/%E7%AE%97%E6%B3%95/" data-id="cknbg4rrw000nr0nl94m12n1y" class="article-share-link">Share</a>
       
       
     </footer>
@@ -234,7 +291,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/04/05/%E6%A1%86%E6%9E%B6%E5%92%8C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB/" data-id="ckn4he65v000jx4nlc89tayf1" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/04/05/%E6%A1%86%E6%9E%B6%E5%92%8C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB/" data-id="cknbg4rrv000lr0nl5hyt35tq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -287,7 +344,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/04/05/io%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8Ccpu%E5%AF%86%E9%9B%86%E5%9E%8B/" data-id="ckn4he65g0004x4nlef592i38" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/04/05/io%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8Ccpu%E5%AF%86%E9%9B%86%E5%9E%8B/" data-id="cknbg4rro000cr0nldw409tnx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -383,7 +440,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/01/18/%E7%BB%8F%E6%B5%8E/" data-id="ckn4he65z000mx4nl501igyxk" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/01/18/%E7%BB%8F%E6%B5%8E/" data-id="cknbg4rru000kr0nl0tj7gfnt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -429,7 +486,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/" data-id="ckn4he65r000fx4nlcmv720c5" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/01/17/%E5%A6%82%E4%BD%95%E8%AE%A9-VMWare-%E5%92%8C-Hyper-V-%E5%85%B1%E5%AD%98/" data-id="cknbg4rrs000gr0nl3qppee3r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -496,7 +553,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/01/03/%E5%90%B4%E6%99%93%E6%B3%A2-%E9%A2%84%E8%A7%812021/" data-id="ckn4he65p000dx4nl15nafnav" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/01/03/%E5%90%B4%E6%99%93%E6%B3%A2-%E9%A2%84%E8%A7%812021/" data-id="cknbg4rrm000ar0nl8oc81rwe" class="article-share-link">Share</a>
       
       
     </footer>
@@ -633,65 +690,7 @@ Makefile：
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/12/12/wsl/" data-id="ckn4he65m000bx4nl36bgfl6v" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Windows系统内存分析工具的介绍" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/" class="article-date">
-  <time datetime="2020-12-02T15:16:10.000Z" itemprop="datePublished">2020-12-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/">Windows系统内存分析工具的介绍</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>微软官方提供多种工具来分析Windows系统的内存使用情况，除了系统自带的任务管理器（Task Manager），资源监视器（Resource Manager），性能监视器（Performance Monitor），还有SysInternals工具，SysInternals工具如RAMMap和PoolMon，可以用来分析内存问题。本文简单介绍这些工具的使用方法，如果需要了解深入了解，请参考微软相关链接。</p>
-<p>任务管理器<br>Windows系统可以使用任务管理器进行内存监控，监控可以显示出详细的内存占用的进程。尤其是在性能中检查虚拟内存的使用情况，可以通过已提交虚拟内存（Commited Bytes）/虚拟内存上限（Commit Limit）查看使用情况。如果已提交虚拟内存非常接近上限，那么系统会出现性能问题。</p>
-<p>Windows 2008 R2</p>
-<ol>
-<li><p>打开任务管理器，单击 性能，通过任务管理器查看内存使用情况。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/1.png" alt="www"></p>
-</li>
-<li><p>还可以添加各类内存指标进行检查，打开任务管理器，依次选择 查看 &gt; 选择列，添加各类内存指标，请重点添加 内存 - 工作集（检查进程物理内存的占用）和 内存 - 提交大小（非保留的虚拟内存空间）。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/2.png" alt="www"></p>
-</li>
-<li><p>打开任务管理器，单击 性能，通过任务管理器查看内存使用情况。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/3.png" alt="www"></p>
-</li>
-</ol>
-<p>资源监视器<br>通过任务管理器，可以打开资源监视器（Resource Manager），进一步检查内存的使用情况，尤其是每个进程的使用情况。对于各个进程而言，请重点关注 提交（KB）内存的大小，监控是否有进程消耗过多资源。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/4.png" alt="www"></p>
-<p>物理内存的使用包含以下几个部分。</p>
-<p>给硬件保留的内存。<br>正在使用内存：由进程、驱动程序、操作系统使用的内存。<br>已修改内存：内容必须写入磁盘才能用于其它用途的内存。<br>备用内存：包含未使用的缓存数据和代码的内存。<br>可用内存：不包含任何有价值数据，以及当进程、驱动程序、操作系统需要更多的内存时优先使用的内存。<br>缓存：当文件被打开时，系统会把文件保存在缓存中，方便下次迅速读写。Windows 2008 R2及以后版本，对这个缓存的使用也做了限制，有一部分物理内存不会被缓存使用，保证系统即使在缓存过大的时候，也有可用物理内存，满足程序使用需求。</p>
-<p>性能监视器<br>性能监视器（Performance Monitor）是用于Windows监控和收集系统资源消耗的重要工具。</p>
-<p>监控性能消耗可以通过添加指定的计数器，实时检查系统资源消耗的情况，如下图所示。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/5.png" alt="www"></p>
-<p>此外，还可以依次选择 数据收集搜集 &gt; 用户定义，手工添加各类计数器，例如Logical Disk、Memory、System、Processor、 Process来收集系统各类资源的实时运行情况，同时通过采样间隔来定义收集频率。例如，如果机器有内存泄露问题很久才能复现，可以配置采样间隔为5秒，如果机器很容易出现CPU异常，那么可以配置采样间隔为1秒。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/6.png" alt="www"></p>
-<p>RAMMap和Process Explorer<br>RAMMap<br>有时在任务管理器的监控窗口中查看不到占用内存异常的进程，但物理内存显示已经负载的状态。这种情况一般是系统底层有占用内存的情况，可以通过RAMMap工具查看系统内存的占用情况，该工具是微软官方的软件，相关信息及下载地址请访问RAMMap。打开RAMMap，可以查看任务管理器中不显示的系统占用内存的情况。</p>
-<p>Process Explorer<br>Process Explorer也可以查看进程的详细资源占用情况，例如打开后也可以查看到进程的各类内存资源使用情况。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/7.png" alt="www"></p>
-<p>Pool Monitor<br>对于WIndows内核而言，其两项核心的内存资源为non paged pool（非页面缓冲池）以及paged pool（页面缓冲池）。操作系统出现内存性能问题，很可能是上述2个资源消耗殆尽。虽然通过上述提到的工具可以查看到资源消耗的情况，但是如果需要定位是系统哪个Tag消耗的资源，需要使用PoolMon来定位。使用介绍请参考Pool Monitor。</p>
-<p>检查perfmon的日志来定位究竟是哪个Pool Tag导致的资源消耗殆尽，例如，检查到IoDn Tag导致资源消耗完，通过如下命令定位到是SafeDogFileGuard.sys,，而后通过修正该应用解决。</p>
-<p>findstr /m /1 IoDn *.sys<br>系统显示类似如下。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/8.png" alt="www"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/" data-id="ckn4he65e0002x4nl7c1nbgbr" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/12/12/wsl/" data-id="cknbg4rrk0008r0nl6y81138p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -737,6 +736,10 @@ Makefile：
       <ul>
         
           <li>
+            <a href="/2021/04/10/%E5%A6%82%E4%BD%95%E8%BF%90%E7%94%A8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%BB%BA%E6%A8%A1/">如何运用面向对象建模</a>
+          </li>
+        
+          <li>
             <a href="/2021/04/05/Windows-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/">Windows 多线程模型</a>
           </li>
         
@@ -750,10 +753,6 @@ Makefile：
         
           <li>
             <a href="/2021/04/05/%E6%A1%86%E6%9E%B6%E5%92%8C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB/">框架和设计模式的区别</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/05/io%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8Ccpu%E5%AF%86%E9%9B%86%E5%9E%8B/">io密集型和cpu密集型</a>
           </li>
         
       </ul>

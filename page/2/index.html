@@ -64,6 +64,64 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Windows系统内存分析工具的介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2020-12-02T15:16:10.000Z" itemprop="datePublished">2020-12-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/">Windows系统内存分析工具的介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>微软官方提供多种工具来分析Windows系统的内存使用情况，除了系统自带的任务管理器（Task Manager），资源监视器（Resource Manager），性能监视器（Performance Monitor），还有SysInternals工具，SysInternals工具如RAMMap和PoolMon，可以用来分析内存问题。本文简单介绍这些工具的使用方法，如果需要了解深入了解，请参考微软相关链接。</p>
+<p>任务管理器<br>Windows系统可以使用任务管理器进行内存监控，监控可以显示出详细的内存占用的进程。尤其是在性能中检查虚拟内存的使用情况，可以通过已提交虚拟内存（Commited Bytes）/虚拟内存上限（Commit Limit）查看使用情况。如果已提交虚拟内存非常接近上限，那么系统会出现性能问题。</p>
+<p>Windows 2008 R2</p>
+<ol>
+<li><p>打开任务管理器，单击 性能，通过任务管理器查看内存使用情况。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/1.png" alt="www"></p>
+</li>
+<li><p>还可以添加各类内存指标进行检查，打开任务管理器，依次选择 查看 &gt; 选择列，添加各类内存指标，请重点添加 内存 - 工作集（检查进程物理内存的占用）和 内存 - 提交大小（非保留的虚拟内存空间）。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/2.png" alt="www"></p>
+</li>
+<li><p>打开任务管理器，单击 性能，通过任务管理器查看内存使用情况。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/3.png" alt="www"></p>
+</li>
+</ol>
+<p>资源监视器<br>通过任务管理器，可以打开资源监视器（Resource Manager），进一步检查内存的使用情况，尤其是每个进程的使用情况。对于各个进程而言，请重点关注 提交（KB）内存的大小，监控是否有进程消耗过多资源。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/4.png" alt="www"></p>
+<p>物理内存的使用包含以下几个部分。</p>
+<p>给硬件保留的内存。<br>正在使用内存：由进程、驱动程序、操作系统使用的内存。<br>已修改内存：内容必须写入磁盘才能用于其它用途的内存。<br>备用内存：包含未使用的缓存数据和代码的内存。<br>可用内存：不包含任何有价值数据，以及当进程、驱动程序、操作系统需要更多的内存时优先使用的内存。<br>缓存：当文件被打开时，系统会把文件保存在缓存中，方便下次迅速读写。Windows 2008 R2及以后版本，对这个缓存的使用也做了限制，有一部分物理内存不会被缓存使用，保证系统即使在缓存过大的时候，也有可用物理内存，满足程序使用需求。</p>
+<p>性能监视器<br>性能监视器（Performance Monitor）是用于Windows监控和收集系统资源消耗的重要工具。</p>
+<p>监控性能消耗可以通过添加指定的计数器，实时检查系统资源消耗的情况，如下图所示。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/5.png" alt="www"></p>
+<p>此外，还可以依次选择 数据收集搜集 &gt; 用户定义，手工添加各类计数器，例如Logical Disk、Memory、System、Processor、 Process来收集系统各类资源的实时运行情况，同时通过采样间隔来定义收集频率。例如，如果机器有内存泄露问题很久才能复现，可以配置采样间隔为5秒，如果机器很容易出现CPU异常，那么可以配置采样间隔为1秒。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/6.png" alt="www"></p>
+<p>RAMMap和Process Explorer<br>RAMMap<br>有时在任务管理器的监控窗口中查看不到占用内存异常的进程，但物理内存显示已经负载的状态。这种情况一般是系统底层有占用内存的情况，可以通过RAMMap工具查看系统内存的占用情况，该工具是微软官方的软件，相关信息及下载地址请访问RAMMap。打开RAMMap，可以查看任务管理器中不显示的系统占用内存的情况。</p>
+<p>Process Explorer<br>Process Explorer也可以查看进程的详细资源占用情况，例如打开后也可以查看到进程的各类内存资源使用情况。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/7.png" alt="www"></p>
+<p>Pool Monitor<br>对于WIndows内核而言，其两项核心的内存资源为non paged pool（非页面缓冲池）以及paged pool（页面缓冲池）。操作系统出现内存性能问题，很可能是上述2个资源消耗殆尽。虽然通过上述提到的工具可以查看到资源消耗的情况，但是如果需要定位是系统哪个Tag消耗的资源，需要使用PoolMon来定位。使用介绍请参考Pool Monitor。</p>
+<p>检查perfmon的日志来定位究竟是哪个Pool Tag导致的资源消耗殆尽，例如，检查到IoDn Tag导致资源消耗完，通过如下命令定位到是SafeDogFileGuard.sys,，而后通过修正该应用解决。</p>
+<p>findstr /m /1 IoDn *.sys<br>系统显示类似如下。<br><img src="/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/8.png" alt="www"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/12/02/Windows%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%8B%E7%BB%8D/" data-id="cknbg4rrf0002r0nl6uqo2bho" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-windows性能分析实例" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/" class="article-date">
@@ -99,7 +157,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/" data-id="ckn4he65k0009x4nl6rfagie8" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%AE%9E%E4%BE%8B/" data-id="cknbg4rrl0009r0nlhjl03chl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -135,7 +193,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" data-id="ckn4he65i0006x4nlfj7jgl7u" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/12/02/linux%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" data-id="cknbg4rrj0006r0nler375x1p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -256,7 +314,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" data-id="ckn4he65j0008x4nl7zeu40g1" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/12/02/windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" data-id="cknbg4rrk0007r0nleqynhr0f" class="article-share-link">Share</a>
       
       
     </footer>
@@ -320,7 +378,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/28/%E5%B8%A6%E4%BD%A0%E7%A0%B4%E8%A7%A3Android%E9%AB%98%E7%BA%A7%E9%9D%A2%E8%AF%95/" data-id="ckn4he65t000hx4nl4yh6eh7u" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/28/%E5%B8%A6%E4%BD%A0%E7%A0%B4%E8%A7%A3Android%E9%AB%98%E7%BA%A7%E9%9D%A2%E8%AF%95/" data-id="cknbg4rrr000fr0nl70g93oo9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -367,7 +425,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/24/linux%E5%86%85%E6%A0%B8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8/" data-id="ckn4he65h0005x4nl1i3c6yuu" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/24/linux%E5%86%85%E6%A0%B8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8/" data-id="cknbg4rr60000r0nl7obg9cx6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -406,7 +464,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/20/%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/" data-id="ckn4he65v000kx4nlbjfxdp6q" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/20/%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/" data-id="cknbg4rrt000ir0nl38cmd5jc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -470,7 +528,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/17/%E5%86%85%E5%8D%B7%E5%8C%96/" data-id="ckn4he65n000cx4nl5kt7fs0t" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/17/%E5%86%85%E5%8D%B7%E5%8C%96/" data-id="cknbg4rs3000qr0nlfi0ea3si" class="article-share-link">Share</a>
       
       
     </footer>
@@ -510,7 +568,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/17/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" data-id="ckn4he660000nx4nlbelb84dx" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/17/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" data-id="cknbg4rs4000rr0nl13p4bhav" class="article-share-link">Share</a>
       
       
     </footer>
@@ -563,52 +621,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/14/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" data-id="ckn4he661000px4nlab9d2ubl" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-windows权限" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/11/14/windows%E6%9D%83%E9%99%90/" class="article-date">
-  <time datetime="2020-11-14T01:12:18.000Z" itemprop="datePublished">2020-11-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/14/windows%E6%9D%83%E9%99%90/">windows权限</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Windows访问控制概述"><a href="#Windows访问控制概述" class="headerlink" title="Windows访问控制概述:"></a>Windows访问控制概述:</h2><p>Windows访问控制中最主要的部分：访问令牌（Access Token）和安全描述符（Security Descriptor），<br>window通过查看访问者AT与被访问对象SD中的内容来确定访问者是否能访问对象。</p>
-<h2 id="Windows访问控制概念介绍："><a href="#Windows访问控制概念介绍：" class="headerlink" title="Windows访问控制概念介绍："></a>Windows访问控制概念介绍：</h2><ul>
-<li>SID：Secure Identifier(安全标识符)，每个用户和账户组都有一个唯一的SID（通常情况下唯一）。它是标识用户、用户组和计算机账户唯一的号码，由计算机名、当前时间、当前用户态线程的CPU耗费时间三个参数来确定。</li>
-<li>Access Token:与特定的windows账户关联，账户环境下启动的所有进程都会获得该令牌的副本，进程中的线程默认获得这个令牌。由关联账户的SID、当前登录账户所属组的SID列表、受限制的SID列表、当前登录账户与所属组的Privilege列表组成。</li>
-<li>Security Descriptor:安全描述符，与被访问对象关联。由对象所有者的SID、属组SID、DACL、SACL组成。DACL（随机访问控制列表）是SD最重要的一部分，描述允许或拒绝特定用户或组的某些访问权限，它包含零个或多个访问控制实体（ACE，Access Control Entry）。</li>
-<li>ACE：访问控制实体，用于指定特定用户/组的访问权限，由SID、SIZE、Type、Access Mask、Inheritance/Audit Flags组成。</li>
-</ul>
-<h2 id="Windows访问控制流程图："><a href="#Windows访问控制流程图：" class="headerlink" title="Windows访问控制流程图："></a>Windows访问控制流程图：</h2><p>当一个线程尝试去访问一个对象时，系统会检查线程持有的令牌以及被访问对象的安全描述符中的DACL。<br>如果安全描述符中不存在DACL，则系统会允许线程进行访问。<br>如果存在DACL，系统会顺序遍历DACL中的每个ACE，检查ACE中的SID在线程的令牌中是否存在。<br>以访问者中的User SID或Group SID作为关键字查询被访问对象中的DACL。<br>顺序：先查询类型为DENY的ACE，若命中且权限符合则访问拒绝；<br>未命中再在ALLOWED类型的ACE中查询，若命中且类型符合则可以访问；以上两步后还没命中那么访问拒绝。</p>
-<p><img src="/2020/11/14/windows%E6%9D%83%E9%99%90/acl.jpeg" alt="www"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/14/windows%E6%9D%83%E9%99%90/" data-id="ckn4he65l000ax4nldfkkgefy" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/14/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" data-id="cknbg4rs2000pr0nl1g3b3b5p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -654,6 +667,10 @@
       <ul>
         
           <li>
+            <a href="/2021/04/10/%E5%A6%82%E4%BD%95%E8%BF%90%E7%94%A8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%BB%BA%E6%A8%A1/">如何运用面向对象建模</a>
+          </li>
+        
+          <li>
             <a href="/2021/04/05/Windows-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/">Windows 多线程模型</a>
           </li>
         
@@ -667,10 +684,6 @@
         
           <li>
             <a href="/2021/04/05/%E6%A1%86%E6%9E%B6%E5%92%8C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB/">框架和设计模式的区别</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/05/io%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8Ccpu%E5%AF%86%E9%9B%86%E5%9E%8B/">io密集型和cpu密集型</a>
           </li>
         
       </ul>
